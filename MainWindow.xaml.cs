@@ -48,6 +48,12 @@ namespace Atalhos
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
       ListaAmbiente = AmbienteController.LerAmbientes("C:\\RM\\Legado", ListaAtalhos);
+
+      if (ListaAmbiente.Count == 0)
+      {
+        System.Windows.MessageBox.Show("Nenhum ambiente encontrado", "Atenção", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+      }
+
       foreach (var item in ListaAmbiente)
       {
         cbxAmbiente.Items.Add(item.Nome);
@@ -207,7 +213,12 @@ namespace Atalhos
       {
         AmbienteController.ApagarBrokerCustom(AmbienteAtual.Bin);
       }
+      if(chkDelBroker.IsChecked == true)
+      {
+        AmbienteController.ApagarBroker(AmbienteAtual.FullName);
+      }
       chkDelCustom.IsChecked = false;
+      chkDelBroker.IsChecked = false;
     }
 
     private void btnDelDllCustom_Click(object sender, RoutedEventArgs e)

@@ -18,6 +18,8 @@ namespace Atalhos.Server
       List<Ambiente> ambientes = new List<Ambiente>();
 
       DirectoryInfo diretorio = new DirectoryInfo(caminhoDiretorio);
+      if (!diretorio.Exists)
+        return ambientes;
       var listDiretorio = diretorio.EnumerateDirectories();
       try
       {

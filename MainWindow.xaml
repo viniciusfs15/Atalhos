@@ -99,7 +99,7 @@
     <Button 
   x:Name="bntEncerrar" 
   HorizontalAlignment="Left" 
-  Margin="164,136,0,0" 
+  Margin="164,162,0,0" 
   VerticalAlignment="Top" 
   Width="60" 
   Click="Encerrar_Click" 
@@ -114,8 +114,8 @@
 		Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}" SelectionChanged="cbxAlias_SelectionChanged"/>
     <Label Content="Alias" HorizontalAlignment="Left" Margin="155,11,0,0" VerticalAlignment="Top" Height="27" Width="50"/>
     <Button x:Name="btnBin" Content="Bin" HorizontalAlignment="Left" Margin="20,123,0,0" VerticalAlignment="Top" Width="125" Click="btnBin_Click" Height="18" />
-    <CheckBox x:Name="chkDelCustom" Content="Del. BrokerCustom" HorizontalAlignment="Left" Margin="231,111,0,0" VerticalAlignment="Top" Height="18" Width="120"/>
-    <CheckBox x:Name="chkLogin" Content="Auto Login" HorizontalAlignment="Left" Margin="231,82,0,0" VerticalAlignment="Top" Height="18" Width="86" IsChecked="True"/>
+    <CheckBox x:Name="chkDelCustom" Content="Del. BrokerCustom" HorizontalAlignment="Left" Margin="232,103,0,0" VerticalAlignment="Top" Height="18" Width="120"/>
+    <CheckBox x:Name="chkLogin" Content="Auto Login" HorizontalAlignment="Left" Margin="232,80,0,0" VerticalAlignment="Top" Height="18" Width="86" IsChecked="True"/>
     <Button x:Name="btnDelCustomDll" Content="Del. Dll Custom" HorizontalAlignment="Left" Margin="20,169,0,0" VerticalAlignment="Top" Width="125" Click="btnDelDllCustom_Click" Height="18" />
     <Button 
 x:Name="btnNovoAlias" 
@@ -133,5 +133,6 @@ BorderBrush="{x:Null}">
     <Button x:Name="btnCustom" Content="Custom" HorizontalAlignment="Left" Margin="20,146,0,0" VerticalAlignment="Top" Width="125" Height="18" Click="btnCustom_Click" />
     <Rectangle HorizontalAlignment="Left" Height="60" Margin="12,199,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="353"/>
     <TextBlock x:Name="lblLog" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="14,203,0,0" VerticalAlignment="Top" Width="351" Foreground="#FFFF9797" Height="56" FontSize="11" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+    <CheckBox x:Name="chkDelBroker" Content="Del. Broker" HorizontalAlignment="Left" Margin="232,126,0,0" VerticalAlignment="Top" Height="18" Width="120"/>
   </Grid>
 </Window>
