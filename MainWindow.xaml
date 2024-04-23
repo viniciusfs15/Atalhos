@@ -1,0 +1,137 @@
+﻿<Window x:Class="Atalhos.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Atalhos"
+        mc:Ignorable="d"
+        Title="Atalhos" Height="310" Width="395" Loaded="Window_Loaded" Background="#FF1E1E1E" Foreground="#FFD1D1D4" Icon="/atalho.ico" WindowStyle="ThreeDBorderWindow" MinWidth="395" MinHeight="310">
+
+  <Window.Resources>
+    <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
+      <Border Background="{TemplateBinding Background}"  
+          BorderBrush="{TemplateBinding BorderBrush}"  
+          BorderThickness="{TemplateBinding BorderThickness}">
+        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"  
+                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+      </Border>
+      <ControlTemplate.Triggers>
+        <Trigger Property="IsEnabled"  
+             Value="False">
+          <Setter Property="Background"  
+              Value="{x:Static SystemColors.ControlLightBrush}" />
+          <Setter Property="Foreground"  
+              Value="{x:Static SystemColors.GrayTextBrush}" />
+        </Trigger>
+      </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style TargetType="{x:Type Button}">
+      <Setter Property="Foreground" Value="#FFD1D1D4"/>
+      <Setter Property="BorderBrush" Value="#4a4a4a" />
+      <Setter Property="Background" Value="#FF2E2E2E"/>
+      <Setter Property="Template" Value="{StaticResource NoMouseOverButtonTemplate}"/>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="#4a4a4a"/>
+          <Setter Property="Foreground" Value="#FFD1D1D4"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type TextBox}">
+      <Setter Property="Foreground" Value="#FFD1D1D4"/>
+      <Setter Property="BorderBrush" Value="#4a4a4a" />
+      <Setter Property="Background" Value="#FF2E2E2E"/>
+      <Style.Triggers>
+        <Trigger Property="IsMouseOver" Value="True">
+          <Setter Property="Background" Value="#4a4a4a"/>
+          <Setter Property="Foreground" Value="#FFD1D1D4"/>
+        </Trigger>
+      </Style.Triggers>
+    </Style>
+    <Style TargetType="{x:Type Label}">
+      <Setter Property="Foreground" Value="#FFD1D1D4"/>
+    </Style>
+    <Style TargetType="{x:Type CheckBox}">
+      <Setter Property="Foreground" Value="#FFD1D1D4"/>
+    </Style>
+  </Window.Resources>
+  <Grid Margin="0,0,0,-1">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="0*"/>
+    </Grid.ColumnDefinitions>
+
+    <Rectangle HorizontalAlignment="Left" Height="124" Margin="12,70,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="353"/>
+
+    <ComboBox x:Name="cbxAmbiente" HorizontalAlignment="Left" Margin="14,38,0,0" VerticalAlignment="Top" Width="125" Height="22" SelectionChanged="cbxAmbiente_SelectionChanged" BorderBrush="#FF2E2E2E" Foreground="#FFD1D1D4" Background="#FF2E2E2E"
+							Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}"/>
+    <Label Content="Ambiente" HorizontalAlignment="Left" Margin="14,12,0,0" VerticalAlignment="Top" Width="68" Foreground="#FFD1D1D4" Height="26"/>
+    <Button x:Name="btnAlias" Content="Alias" HorizontalAlignment="Left" Margin="20,100,0,0" VerticalAlignment="Top" Width="125" Click="btnAlias_Click" Height="18" />
+    <Button x:Name="btnAtualizador" Content="Atualizador" HorizontalAlignment="Left" Margin="20,76,0,0" VerticalAlignment="Top" Width="125" Click="btnAtualizador_Click" Height="18"   />
+    <Button 
+      x:Name="btnHost"
+      HorizontalAlignment="Left" 
+      Margin="164,106,0,0" 
+      VerticalAlignment="Top" 
+      Width="60" 
+      Click="btnHost_Click" 
+      Height="25"
+      BorderBrush="{x:Null}">
+      <StackPanel Orientation="Horizontal">
+        <Image Source="/Host.png" Width="16" Height="16" Stretch="Fill" />
+        <Label Foreground="#FFD1D1D4" Width="40" Height="17" Padding="1" Margin="0" FontSize="10" VerticalAlignment="Top" Content="Host"/>
+      </StackPanel>
+    </Button>
+    <Button 
+      x:Name="btnRMexe" 
+      HorizontalAlignment="Left" 
+      Margin="164,76,0,0" 
+      VerticalAlignment="Top" 
+      Width="60" 
+      Click="btnRMexe_Click" 
+      Height="25" 
+      BorderBrush="{x:Null}">
+      <StackPanel Orientation="Horizontal">
+        <Image Source="/TOTVS_Branco.png" Width="16" Height="16" Stretch="Fill" />
+        <Label Foreground="#FFD1D1D4" Width="40" Height="17" Padding="1" Margin="0" FontSize="10" VerticalAlignment="Top" Content="RM"/>
+      </StackPanel>
+    </Button>
+    <Button 
+  x:Name="bntEncerrar" 
+  HorizontalAlignment="Left" 
+  Margin="164,136,0,0" 
+  VerticalAlignment="Top" 
+  Width="60" 
+  Click="Encerrar_Click" 
+  Height="26" 
+  BorderBrush="{x:Null}">
+      <StackPanel Orientation="Horizontal">
+        <Image Source="/Host_Down.png" Width="16" Height="16" Stretch="Fill" />
+        <Label Foreground="#FFD1D1D4" Width="40" Height="17" Padding="1" Margin="0" FontSize="10" VerticalAlignment="Top" Content="Fechar"/>
+      </StackPanel>
+    </Button>
+    <ComboBox x:Name="cbxAlias" HorizontalAlignment="Left" Margin="155,38,0,0" VerticalAlignment="Top" Width="187" Height="22" BorderBrush="#FF2E2E2E" Foreground="#FFD1D1D4" Background="#FF2E2E2E"
+		Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}" SelectionChanged="cbxAlias_SelectionChanged"/>
+    <Label Content="Alias" HorizontalAlignment="Left" Margin="155,11,0,0" VerticalAlignment="Top" Height="27" Width="50"/>
+    <Button x:Name="btnBin" Content="Bin" HorizontalAlignment="Left" Margin="20,123,0,0" VerticalAlignment="Top" Width="125" Click="btnBin_Click" Height="18" />
+    <CheckBox x:Name="chkDelCustom" Content="Del. BrokerCustom" HorizontalAlignment="Left" Margin="231,111,0,0" VerticalAlignment="Top" Height="18" Width="120"/>
+    <CheckBox x:Name="chkLogin" Content="Auto Login" HorizontalAlignment="Left" Margin="231,82,0,0" VerticalAlignment="Top" Height="18" Width="86" IsChecked="True"/>
+    <Button x:Name="btnDelCustomDll" Content="Del. Dll Custom" HorizontalAlignment="Left" Margin="20,169,0,0" VerticalAlignment="Top" Width="125" Click="btnDelDllCustom_Click" Height="18" />
+    <Button 
+x:Name="btnNovoAlias" 
+HorizontalAlignment="Left" 
+Margin="345,38,0,0" 
+VerticalAlignment="Top" 
+Width="23" 
+Click="btnNovoAlias_Click" 
+Height="23" 
+BorderBrush="{x:Null}">
+      <StackPanel Orientation="Horizontal">
+        <Image Source="/16px - contabilizacao-aprovacao.png" Width="20" Height="20" Stretch="Fill" />
+      </StackPanel>
+    </Button>
+    <Button x:Name="btnCustom" Content="Custom" HorizontalAlignment="Left" Margin="20,146,0,0" VerticalAlignment="Top" Width="125" Height="18" Click="btnCustom_Click" />
+    <Rectangle HorizontalAlignment="Left" Height="60" Margin="12,199,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="353"/>
+    <TextBlock x:Name="lblLog" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="14,203,0,0" VerticalAlignment="Top" Width="351" Foreground="#FFFF9797" Height="56" FontSize="11" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+  </Grid>
+</Window>
