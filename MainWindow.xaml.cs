@@ -7,6 +7,8 @@ using System.Windows.Input;
 using System.Threading;
 using System.Linq;
 using System.IO;
+using Atalhos.Controllers;
+using System.Diagnostics;
 
 namespace Atalhos
 {
@@ -47,6 +49,14 @@ namespace Atalhos
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
+      VersionController versionController = new VersionController();
+      if (!versionController.IsLastVersion())
+      {
+        var result = System.Windows.MessageBox.Show("Existe nova versão disponível!\r\nDeseja acessar a página de download?", "Atalho", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question);
+        if(result == System.Windows.MessageBoxResult.Yes)
+          Process.Start("https://github.com/viniciusfs15/Atalhos/releases");
+      }
+
       ListaAmbiente = AmbienteController.LerAmbientes("C:\\RM\\Legado", ListaAtalhos);
 
       if (ListaAmbiente.Count == 0)
@@ -119,17 +129,24 @@ namespace Atalhos
     private void IniciarApp(string app, bool privilegios = false)
     {
       SetAmbienteAtual();
+      var atalho = AmbienteAtual.Arquivos.Find(x => x.Nome == app);
+      if (atalho == null)
+        return;
+
       if (privilegios)
       {
-        AmbienteController.IniciarAppComPrivilegios(AmbienteAtual.Arquivos.Find(x => x.Nome == app));
+        AmbienteController.IniciarAppComPrivilegios(atalho);
         return;
       }
-      AmbienteController.IniciarAppComArgumentos(AmbienteAtual.Arquivos.Find(x => x.Nome == app));
+      AmbienteController.IniciarAppComArgumentos(atalho);
     }
 
     private void IniciarAppSemArgumentos(string app, bool privilegios)
     {
       SetAmbienteAtual();
+      var atalho = AmbienteAtual.Arquivos.Find(x => x.Nome == app);
+      if (atalho == null)
+        return;
       if (privilegios)
       {
         AmbienteController.IniciarAppComPrivilegiosSemArgumentos(AmbienteAtual.Arquivos.Find(x => x.Nome == app));
@@ -215,7 +232,7 @@ namespace Atalhos
       }
       if(chkDelBroker.IsChecked == true)
       {
-        AmbienteController.ApagarBroker(AmbienteAtual.FullName);
+        AmbienteController.ApagarBroker(AmbienteAtual.Bin);
       }
       chkDelCustom.IsChecked = false;
       chkDelBroker.IsChecked = false;
@@ -271,7 +288,7 @@ namespace Atalhos
     {
       AliasForm form = new AliasForm();
       form.Ambiente = AmbienteAtual;
-      form.AliasSelecionado = cbxAlias.SelectedItem.ToString();
+      form.AliasSelecionado = cbxAlias.SelectedItem?.ToString();
       form.ShowDialog();
       CarregaCbxAlias();
     }

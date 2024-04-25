@@ -52,6 +52,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Octokit, Version=11.0.1.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
+      <HintPath>packages\Octokit.11.0.1\lib\netstandard2.0\Octokit.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -206,6 +209,7 @@
     </Compile>
     <Compile Include="Controller\AmbienteController.cs" />
     <Compile Include="Controller\ControllerBase.cs" />
+    <Compile Include="Controller\VersionController.cs" />
     <Compile Include="Entidade\Ambiente.cs" />
     <Compile Include="Entidade\Atalho.cs" />
     <Compile Include="Entidade\DbConfig.cs" />
@@ -216,6 +220,7 @@
     <Compile Include="Server\ArquivoServer.cs" />
     <Compile Include="Entidade\AliasConfig.cs" />
     <Compile Include="Server\Config\ConfigServer.cs" />
+    <Compile Include="Server\VersionServer.cs" />
     <Compile Include="Server\LeitorAliasServer.cs" />
     <Compile Include="Server\ProcessoServer.cs" />
     <Page Include="Alias.xaml">
