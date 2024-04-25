@@ -43,7 +43,7 @@ namespace Atalhos
       if(!string.IsNullOrWhiteSpace(AliasSelecionado))
         gridAlias.SelectedItem = AliasSelecionado;
 
-      AtualizarCampos(gridAlias.SelectedItem.ToString());
+      AtualizarCampos(gridAlias.SelectedItem?.ToString());
     }
 
     private void AtualizarCampos(string nomeAlias)

@@ -65,6 +65,9 @@ namespace Atalhos
 
     public void CreateAliasDat(AliasConfig alias)
     {
+      if(alias == null)
+        return;
+
       DeleteAliasDat();
       CriarXmlAliasDat(alias);
     }
