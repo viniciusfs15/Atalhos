@@ -13,6 +13,7 @@ namespace Atalhos
     public string FullName { get; internal set; }
     public string Bin => Path.Combine(FullName, "Bin");
     public string Custom => Path.Combine(Bin, "Custom");
+    public string Unidade { get; internal set; }
 
     public List<Atalho> Arquivos = new List<Atalho>();
   }

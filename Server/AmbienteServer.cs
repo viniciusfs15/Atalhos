@@ -28,6 +28,7 @@ namespace Atalhos.Server
           Ambiente ambiente = new Ambiente();
           ambiente.Nome = pastaAmbiente.Name;
           ambiente.FullName = pastaAmbiente.FullName;
+          ambiente.Unidade = pastaAmbiente.Root.Name;
           ambientes.Add(ambiente);
         }
         return ambientes;
