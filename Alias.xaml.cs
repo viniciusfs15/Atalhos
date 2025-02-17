@@ -160,6 +160,7 @@ namespace Atalhos
       alias.UsuarioRM = txtUsuario.Text.Trim();
       alias.JobServerMaxThreads = Convert.ToInt32(txtJobServerMaxThreads.Text);
       alias.Versao = Ambiente.Nome.Trim();
+      alias.Unidade = Ambiente.Unidade;
 
       return alias;
     }

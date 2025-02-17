@@ -23,6 +23,7 @@ namespace Atalhos
     public string UsuarioDB { get; set; } = "SYSDBA";
     public string SenhaDB { get; set; } = "masterkey";
     public int JobServerMaxThreads { get; set; }
+    public string Unidade { get; set; }
 
     public string DbType
     {

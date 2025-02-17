@@ -20,7 +20,7 @@ namespace Atalhos
         ListaAliasConfig = JsonConvert.DeserializeObject<List<AliasConfig>>(jsonData);
       }
       
-      if (ListaAliasConfig.Any(x => x.Versao == aliasConfig.Versao && x.NomeAlias == aliasConfig.NomeAlias))
+      if (ListaAliasConfig.Any(x => x.Versao == aliasConfig.Versao && x.Unidade == aliasConfig.Unidade && x.NomeAlias == aliasConfig.NomeAlias))
       {
         ListaAliasConfig.Remove(ListaAliasConfig.Find(x => x.Versao == aliasConfig.Versao && x.NomeAlias == aliasConfig.NomeAlias));
       }
@@ -43,7 +43,7 @@ namespace Atalhos
       if (!string.IsNullOrEmpty(jsonData))
       {
         ListaAliasConfig = JsonConvert.DeserializeObject<List<AliasConfig>>(jsonData);
-        if (ListaAliasConfig.Any(x => x.Versao == aliasConfig.Versao && x.NomeAlias == aliasConfig.NomeAlias))
+        if (ListaAliasConfig.Any(x => x.Versao == aliasConfig.Versao && x.Unidade == aliasConfig.Unidade && x.NomeAlias == aliasConfig.NomeAlias))
         {
           ListaAliasConfig.Remove(ListaAliasConfig.Find(x => x.Versao == aliasConfig.Versao && x.NomeAlias == aliasConfig.NomeAlias));
           File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(ListaAliasConfig));
@@ -68,7 +68,7 @@ namespace Atalhos
       return ListaAliasConfig;
     }
 
-    public AliasConfig GetAliasConfig(string versao, string nomeAlias)
+    public AliasConfig GetAliasConfig(string versao, string nomeAlias, string unidade)
     {
       var ListaAliasConfig = new List<AliasConfig>();
       
@@ -80,7 +80,7 @@ namespace Atalhos
       if (!string.IsNullOrEmpty(jsonData))
       {
         ListaAliasConfig = JsonConvert.DeserializeObject<List<AliasConfig>>(jsonData);
-        var alias = ListaAliasConfig.Find(x => x.Versao == versao && x.NomeAlias == nomeAlias);
+        var alias = ListaAliasConfig.Find(x => x.Versao == versao && x.Unidade == unidade && x.NomeAlias == nomeAlias);
         if (alias != null)
           return alias;
       }

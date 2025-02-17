@@ -57,7 +57,11 @@ namespace Atalhos
           Process.Start("https://github.com/viniciusfs15/Atalhos/releases");
       }
 
-      ListaAmbiente = AmbienteController.LerAmbientes("C:\\RM\\Legado", ListaAtalhos);
+      var unidades = DriveInfo.GetDrives().Where(x => x.DriveType == DriveType.Fixed).Select(x => x.Name).ToList();
+      foreach (var unidade in unidades)
+      {
+        ListaAmbiente.AddRange(AmbienteController.LerAmbientes($"{unidade}RM\\Legado", ListaAtalhos));
+      }
 
       if (ListaAmbiente.Count == 0)
       {
@@ -66,7 +70,7 @@ namespace Atalhos
 
       foreach (var item in ListaAmbiente)
       {
-        cbxAmbiente.Items.Add(item.Nome);
+        cbxAmbiente.Items.Add(item.Unidade + item.Nome);
       }
       cbxAmbiente.SelectedIndex = 0;
       lblLog.Text = string.Empty;
@@ -95,7 +99,7 @@ namespace Atalhos
     {
       if (!string.IsNullOrWhiteSpace(cbxAmbiente.SelectedItem.ToString()))
       {
-        var ambiente = ListaAmbiente.Find(x => x.Nome == cbxAmbiente.SelectedItem.ToString());
+        var ambiente = ListaAmbiente.Find(x => x.Nome == cbxAmbiente.SelectedItem.ToString().Split('\\')[1]);
         AmbienteAtual = ambiente;
         PreencherListaAtalhos();
       }
@@ -281,6 +285,7 @@ namespace Atalhos
       {
         Versao = AmbienteAtual.Nome,
         NomeAlias = cbxAlias.SelectedItem.ToString(),
+        Unidade = AmbienteAtual.Unidade,
       });
     }
 

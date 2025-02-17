@@ -26,7 +26,7 @@ namespace Atalhos
       AliasPath = Path.Combine(caminhoAmbiente, "Bin", StringConstantes.AliasDat);
     }
 
-    public List<AliasConfig> GetAliasData(string versao)
+    public List<AliasConfig> GetAliasData(string versao, string unidade)
     {
       if (!File.Exists(AliasPath))
         return null;
@@ -38,7 +38,7 @@ namespace Atalhos
 
       foreach (var alias in aliasData.DbConfig)
       {
-        var aliasConfig = configServer.GetAliasConfig(versao, alias.Alias);
+        var aliasConfig = configServer.GetAliasConfig(versao, alias.Alias, unidade);
         if (aliasConfig == null)
         {
           aliasConfig = new AliasConfig
