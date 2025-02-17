@@ -49,8 +49,8 @@ namespace Atalhos.Server
       var versaoGitHub = GetLastVersion().Split('.');
 
       if (Convert.ToInt32(versaoApp[0]) < Convert.ToInt32(versaoGitHub[0]) ||
-          Convert.ToInt32(versaoApp[1]) < Convert.ToInt32(versaoGitHub[1]) ||
-          Convert.ToInt32(versaoApp[2]) < Convert.ToInt32(versaoGitHub[2]))
+          (Convert.ToInt32(versaoApp[0]) <= Convert.ToInt32(versaoGitHub[0]) && Convert.ToInt32(versaoApp[1]) < Convert.ToInt32(versaoGitHub[1])) ||
+          (Convert.ToInt32(versaoApp[1]) <= Convert.ToInt32(versaoGitHub[1]) && Convert.ToInt32(versaoApp[2]) < Convert.ToInt32(versaoGitHub[2])))
         return false;
       return true;
     }

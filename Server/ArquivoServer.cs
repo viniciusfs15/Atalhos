@@ -31,7 +31,9 @@ namespace Atalhos.Server
 
     internal bool ExisteDll(string caminho, string contem, string naoContem)
     {
-      return new DirectoryInfo(caminho).EnumerateFiles().Where(x => x.Name.ToLower().Contains(contem.ToLower()) && x.Name.ToLower().Contains(".dll") && !x.Name.ToLower().Contains(naoContem.ToLower())).ToList().Count() > 0;
+      if (Directory.Exists(caminho))
+        return new DirectoryInfo(caminho).EnumerateFiles().Where(x => x.Name.ToLower().Contains(contem.ToLower()) && x.Name.ToLower().Contains(".dll") && !x.Name.ToLower().Contains(naoContem.ToLower())).ToList().Count() > 0;
+      return false;
     }
   }
 }
