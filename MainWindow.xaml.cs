@@ -39,24 +39,42 @@ namespace Atalhos
     }
     private AmbienteController _controller;
 
+    public ConfigController ConfigController
+    {
+      get
+      {
+        if (_configController == null)
+          _configController = new ConfigController();
+        return _configController;
+      }
+      set { _configController = value; }
+    }
+    private ConfigController _configController;
+
     private Dictionary<Keys, Action> _shortcuts;
     #endregion
 
     public MainWindow()
     {
       InitializeComponent();
+      RestoreWindowPosition();
     }
 
     private void Window_Loaded(object sender, RoutedEventArgs e)
     {
-      VersionController versionController = new VersionController();
-      if (!versionController.IsLastVersion())
-      {
-        var result = System.Windows.MessageBox.Show("Existe nova versão disponível!\r\nDeseja acessar a página de download?", "Atalho", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question);
-        if(result == System.Windows.MessageBoxResult.Yes)
-          Process.Start("https://github.com/viniciusfs15/Atalhos/releases");
-      }
+      ValidarVersao();
+      LerAmbientes();
 
+      foreach (var item in ListaAmbiente)
+      {
+        cbxAmbiente.Items.Add(item.Unidade + item.Nome);
+      }
+      cbxAmbiente.SelectedIndex = 0;
+      lblLog.Text = string.Empty;
+    }
+
+    private void LerAmbientes()
+    {
       var unidades = DriveInfo.GetDrives().Where(x => x.DriveType == DriveType.Fixed).Select(x => x.Name).ToList();
       foreach (var unidade in unidades)
       {
@@ -67,13 +85,17 @@ namespace Atalhos
       {
         System.Windows.MessageBox.Show("Nenhum ambiente encontrado", "Atenção", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
       }
+    }
 
-      foreach (var item in ListaAmbiente)
+    private static void ValidarVersao()
+    {
+      VersionController versionController = new VersionController();
+      if (!versionController.IsLastVersion())
       {
-        cbxAmbiente.Items.Add(item.Unidade + item.Nome);
+        var result = System.Windows.MessageBox.Show("Existe nova versão disponível!\r\nDeseja acessar a página de download?", "Atalho", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question);
+        if (result == System.Windows.MessageBoxResult.Yes)
+          Process.Start("https://github.com/viniciusfs15/Atalhos/releases");
       }
-      cbxAmbiente.SelectedIndex = 0;
-      lblLog.Text = string.Empty;
     }
 
     private void GetNomesAtalhos()
@@ -100,8 +122,11 @@ namespace Atalhos
       if (!string.IsNullOrWhiteSpace(cbxAmbiente.SelectedItem.ToString()))
       {
         var ambiente = ListaAmbiente.Find(x => x.Nome == cbxAmbiente.SelectedItem.ToString().Split('\\')[1]);
+
         AmbienteAtual = ambiente;
+
         PreencherListaAtalhos();
+        chkControleIis.IsChecked = AmbienteAtual.ControlaIIS;
       }
     }
 
@@ -111,6 +136,9 @@ namespace Atalhos
       if (!string.IsNullOrWhiteSpace(cbxAmbiente.SelectedItem.ToString()))
       {
         Alias = AmbienteController.LerAlias(AmbienteAtual);
+        if (Alias != null && cbxAlias.SelectedItem != null)
+          AmbienteAtual.ControlaIIS = Alias.ToList().Find(x => x.NomeAlias == cbxAlias.SelectedItem.ToString()).ControlaIIS;
+         //= Alias.ToList().Find(x => x.NomeAlias == cbxAlias.SelectedItem.ToString()).ControlaIIS;
       }
     }
 
@@ -143,6 +171,9 @@ namespace Atalhos
         return;
       }
       AmbienteController.IniciarAppComArgumentos(atalho);
+      
+      if (app == "RM.Host.exe" && AmbienteAtual.ControlaIIS)
+        AmbienteController.ReciclarAppPool();
     }
 
     private void IniciarAppSemArgumentos(string app, bool privilegios)
@@ -177,6 +208,8 @@ namespace Atalhos
     private void cbxAmbiente_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
       CarregaCbxAlias();
+      AmbienteAtual.ControlaIIS = Alias.ToList().Find(x => x.NomeAlias == cbxAlias.SelectedItem.ToString()).ControlaIIS;
+      chkControleIis.IsChecked = AmbienteAtual.ControlaIIS;
     }
 
     private void CarregaCbxAlias()
@@ -213,7 +246,7 @@ namespace Atalhos
       MouseFeedBack();
       AmbienteController.CreateAlias(AmbienteAtual.FullName, AliasSelecionado);
       DelBroker();
-      IniciarApp("RM.Host.exe", true);      
+      IniciarApp("RM.Host.exe", true);
     }
 
     private void AtualizarLog()
@@ -302,6 +335,47 @@ namespace Atalhos
     {
       MouseFeedBack();
       AmbienteController.IniciarAppComArgumentos(new Atalho(Path.Combine(AmbienteAtual.Bin, "Custom")));
+    }
+
+    private void btnIisReset_Click(object sender, RoutedEventArgs e)
+    {
+      MouseFeedBack();
+      AmbienteController.ResetarIIS(AmbienteAtual, chkControleIis.IsChecked);
+    }
+
+    private void chkControleIis_Checked(object sender, RoutedEventArgs e)
+    {
+      ConfigController.ControlarIIS(AmbienteAtual, chkControleIis.IsChecked);
+    }
+
+    private void SaveWindowPosition()
+    {
+      Properties.Settings.Default.WindowTop = this.Top;
+      Properties.Settings.Default.WindowLeft = this.Left;
+      Properties.Settings.Default.WindowHeight = this.Height;
+      Properties.Settings.Default.WindowWidth = this.Width;
+      Properties.Settings.Default.Save();
+    }
+    private void RestoreWindowPosition()
+    {
+      if (Properties.Settings.Default.WindowTop != 0)
+        this.Top = Properties.Settings.Default.WindowTop;
+      if (Properties.Settings.Default.WindowLeft != 0)
+        this.Left = Properties.Settings.Default.WindowLeft;
+      if (Properties.Settings.Default.WindowHeight != 0)
+        this.Height = Properties.Settings.Default.WindowHeight;
+      if (Properties.Settings.Default.WindowWidth != 0)
+        this.Width = Properties.Settings.Default.WindowWidth;
+    }
+
+    private void Window_Closing(object sender, EventArgs e)
+    {
+      SaveWindowPosition();
+    }
+
+    private void btnIisReciclar_Click(object sender, RoutedEventArgs e)
+    {
+      AmbienteController.ReciclarAppPool();
     }
   }
 }
