@@ -53,9 +53,21 @@ namespace Atalhos
       }
       set { _arquivoServer = value; }
     }
-		#endregion
 
-		public List<Ambiente> LerAmbientes(string caminho, List<Atalho> atalhos)
+    private IISServer IIsServer
+    {
+      get
+      {
+        if (_xmlServer == null)
+          _xmlServer = new IISServer();
+        return _xmlServer;
+      }
+      set { _xmlServer = value; }
+    }
+    private IISServer _xmlServer;
+    #endregion
+
+    public List<Ambiente> LerAmbientes(string caminho, List<Atalho> atalhos)
     {
       return AmbienteServer.LerDiretorios(caminho, atalhos);
     }
@@ -183,6 +195,24 @@ namespace Atalhos
         log.AppendLine("Foram encontradas Dlls que não tem o prefixo \"RM.Cst.\" na pasta Custom;");
 
       return log.ToString();
+    }
+
+    internal void ResetarIIS(Ambiente ambienteAtual, bool? alterPath)
+    {
+      if (alterPath != null && alterPath == true)
+        AlterIisPath(ambienteAtual);
+
+      ProcessoServer.IniciarComoAdministrador("iisreset.exe");
+    }
+
+    internal void AlterIisPath(Ambiente ambienteAtual)
+    {
+      IIsServer.AlterPathAplication(ambienteAtual.FullName);
+    }
+
+    internal void ReciclarAppPool()
+    {
+      IIsServer.ReciclarAppPool();
     }
   }
 }

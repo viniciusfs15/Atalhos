@@ -96,5 +96,22 @@ namespace Atalhos
       AddAliasConfig(aliasConfig);
       return aliasConfig;
     }
+
+    public void UpdateAmbienteConfig(Ambiente ambiente)
+    {
+      var json = File.ReadAllText(ConfigPath);
+      var ambientes = JsonConvert.DeserializeObject<List<AliasConfig>>(json);
+      var ambienteToUpdate = ambientes.Find(x => x.Versao == ambiente.Nome && x.Unidade == ambiente.Unidade);
+      if (ambienteToUpdate != null) 
+      {
+        ambientes.Remove(ambienteToUpdate);
+
+        ambienteToUpdate.ControlaIIS = ambiente.ControlaIIS;
+        
+        ambientes.Add(ambienteToUpdate);
+
+        File.WriteAllText(ConfigPath, JsonConvert.SerializeObject(ambientes));
+      }
+    }
   }
 }

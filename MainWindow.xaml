@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Atalhos"
         mc:Ignorable="d"
-        Title="Atalhos" Height="310" Width="395" Loaded="Window_Loaded" Background="#FF1E1E1E" Foreground="#FFD1D1D4" Icon="/atalho.ico" WindowStyle="ThreeDBorderWindow" MinWidth="395" MinHeight="310">
+        Title="Atalhos" Height="323" Width="548" Loaded="Window_Loaded" Background="#FF1E1E1E" Foreground="#FFD1D1D4" Icon="/atalho.ico" WindowStyle="ThreeDBorderWindow" MinWidth="548" Closed="Window_Closing" MinHeight="323">
 
   <Window.Resources>
     <ControlTemplate x:Key="NoMouseOverButtonTemplate" TargetType="Button">
@@ -61,7 +61,9 @@
       <ColumnDefinition Width="0*"/>
     </Grid.ColumnDefinitions>
 
-    <Rectangle HorizontalAlignment="Left" Height="124" Margin="12,70,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="353"/>
+    <Rectangle HorizontalAlignment="Left" Height="135" Margin="12,70,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="502"/>
+
+    <Rectangle HorizontalAlignment="Left" Height="59" Margin="164,137,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="298"/>
 
     <ComboBox x:Name="cbxAmbiente" HorizontalAlignment="Left" Margin="14,38,0,0" VerticalAlignment="Top" Width="125" Height="22" SelectionChanged="cbxAmbiente_SelectionChanged" BorderBrush="#FF2E2E2E" Foreground="#FFD1D1D4" Background="#FF2E2E2E"
 							Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}"/>
@@ -71,7 +73,7 @@
     <Button 
       x:Name="btnHost"
       HorizontalAlignment="Left" 
-      Margin="164,106,0,0" 
+      Margin="229,101,0,0" 
       VerticalAlignment="Top" 
       Width="60" 
       Click="btnHost_Click" 
@@ -85,7 +87,7 @@
     <Button 
       x:Name="btnRMexe" 
       HorizontalAlignment="Left" 
-      Margin="164,76,0,0" 
+      Margin="164,101,0,0" 
       VerticalAlignment="Top" 
       Width="60" 
       Click="btnRMexe_Click" 
@@ -99,7 +101,7 @@
     <Button 
   x:Name="bntEncerrar" 
   HorizontalAlignment="Left" 
-  Margin="164,162,0,0" 
+  Margin="294,101,0,0" 
   VerticalAlignment="Top" 
   Width="60" 
   Click="Encerrar_Click" 
@@ -114,8 +116,8 @@
 		Style="{StaticResource {x:Static ToolBar.ComboBoxStyleKey}}" SelectionChanged="cbxAlias_SelectionChanged"/>
     <Label Content="Alias" HorizontalAlignment="Left" Margin="155,11,0,0" VerticalAlignment="Top" Height="27" Width="50"/>
     <Button x:Name="btnBin" Content="Bin" HorizontalAlignment="Left" Margin="20,123,0,0" VerticalAlignment="Top" Width="125" Click="btnBin_Click" Height="18" />
-    <CheckBox x:Name="chkDelCustom" Content="Del. BrokerCustom" HorizontalAlignment="Left" Margin="232,103,0,0" VerticalAlignment="Top" Height="18" Width="120"/>
-    <CheckBox x:Name="chkLogin" Content="Auto Login" HorizontalAlignment="Left" Margin="232,80,0,0" VerticalAlignment="Top" Height="18" Width="86" IsChecked="True"/>
+    <CheckBox x:Name="chkDelCustom" Content="Del. BrokerCustom" HorizontalAlignment="Left" Margin="342,78,0,0" VerticalAlignment="Top" Height="18" Width="120"/>
+    <CheckBox x:Name="chkLogin" Content="Auto Login" HorizontalAlignment="Left" Margin="164,76,0,0" VerticalAlignment="Top" Height="18" Width="86" IsChecked="True"/>
     <Button x:Name="btnDelCustomDll" Content="Del. Dll Custom" HorizontalAlignment="Left" Margin="20,169,0,0" VerticalAlignment="Top" Width="125" Click="btnDelDllCustom_Click" Height="18" />
     <Button 
 x:Name="btnNovoAlias" 
@@ -131,8 +133,37 @@ BorderBrush="{x:Null}">
       </StackPanel>
     </Button>
     <Button x:Name="btnCustom" Content="Custom" HorizontalAlignment="Left" Margin="20,146,0,0" VerticalAlignment="Top" Width="125" Height="18" Click="btnCustom_Click" />
-    <Rectangle HorizontalAlignment="Left" Height="60" Margin="12,199,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="353"/>
-    <TextBlock x:Name="lblLog" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="14,203,0,0" VerticalAlignment="Top" Width="351" Foreground="#FFFF9797" Height="56" FontSize="11" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
-    <CheckBox x:Name="chkDelBroker" Content="Del. Broker" HorizontalAlignment="Left" Margin="232,126,0,0" VerticalAlignment="Top" Height="18" Width="120"/>
+    <Rectangle HorizontalAlignment="Left" Height="60" Margin="14,213,0,0" Stroke="#FF4A4A4A" VerticalAlignment="Top" Width="502"/>
+    <TextBlock x:Name="lblLog" TextWrapping="WrapWithOverflow" HorizontalAlignment="Left" Margin="16,217,0,0" VerticalAlignment="Top" Width="500" Foreground="#FFFF9797" Height="56" FontSize="11" UseLayoutRounding="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"/>
+    <CheckBox x:Name="chkDelBroker" Content="Del. Broker" HorizontalAlignment="Left" Margin="255,78,0,0" VerticalAlignment="Top" Height="18" Width="82"/>
+    <CheckBox x:Name="chkControleIis" Content="Controla IIS" HorizontalAlignment="Left" Margin="236,142,0,0" VerticalAlignment="Top" Height="18" Width="120" Click="chkControleIis_Checked"/>
+    <Button 
+      x:Name="btnIisReset" 
+      HorizontalAlignment="Left" 
+      Margin="170,162,0,0" 
+      VerticalAlignment="Top" 
+      Width="60" 
+      Click="btnIisReset_Click" 
+      Height="26" 
+      BorderBrush="{x:Null}">
+      <StackPanel Orientation="Horizontal">
+        <Image Source="/Resources/IIS.Png" Width="16" Height="16" Stretch="Fill" />
+        <Label Foreground="#FFD1D1D4" Width="40" Height="17" Padding="1" Margin="0" FontSize="10" VerticalAlignment="Top" Content="Reset"/>
+      </StackPanel>
+    </Button>
+    <Button 
+      x:Name="btnIisReciclar" 
+      HorizontalAlignment="Left" 
+      Margin="236,162,0,0" 
+      VerticalAlignment="Top" 
+      Width="101" 
+      Height="26" 
+      BorderBrush="{x:Null}" Click="btnIisReciclar_Click">
+      <StackPanel Orientation="Horizontal">
+        <Image Source="/Resources/update.png" Width="16" Height="16" Stretch="Fill" />
+        <Label Foreground="#FFD1D1D4" Width="82" Height="17" Padding="1" Margin="0" FontSize="10" VerticalAlignment="Top" Content="Reciclar AppPool"/>
+      </StackPanel>
+    </Button>
+    <Label Content="IIS" HorizontalAlignment="Left" Margin="167,136,0,0" VerticalAlignment="Top"/>
   </Grid>
 </Window>

@@ -24,6 +24,7 @@ namespace Atalhos
     public string SenhaDB { get; set; } = "masterkey";
     public int JobServerMaxThreads { get; set; }
     public string Unidade { get; set; }
+    public bool ControlaIIS { get; set; }
 
     public string DbType
     {
