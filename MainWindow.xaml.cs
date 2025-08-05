@@ -208,7 +208,9 @@ namespace Atalhos
     private void cbxAmbiente_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
       CarregaCbxAlias();
-      AmbienteAtual.ControlaIIS = Alias.ToList().Find(x => x.NomeAlias == cbxAlias.SelectedItem.ToString()).ControlaIIS;
+      if(Alias == null || cbxAlias.SelectedItem == null)
+				return;
+			AmbienteAtual.ControlaIIS = Alias.ToList().Find(x => x.NomeAlias == cbxAlias.SelectedItem.ToString()).ControlaIIS;
       chkControleIis.IsChecked = AmbienteAtual.ControlaIIS;
     }
 
@@ -376,6 +378,7 @@ namespace Atalhos
     private void btnIisReciclar_Click(object sender, RoutedEventArgs e)
     {
       AmbienteController.ReciclarAppPool();
+      MouseFeedBack();
     }
   }
 }
