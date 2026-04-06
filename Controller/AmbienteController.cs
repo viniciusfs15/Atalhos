@@ -67,9 +67,9 @@ namespace Atalhos
     private IISServer _xmlServer;
     #endregion
 
-    public List<Ambiente> LerAmbientes(string caminho, List<Atalho> atalhos)
+    public List<Ambiente> LerAmbientes(List<Atalho> atalhos)
     {
-      return AmbienteServer.LerDiretorios(caminho, atalhos);
+      return AmbienteServer.ListarAmbientes(atalhos);
     }
 
     public void EncerrarProcesso()
@@ -80,12 +80,6 @@ namespace Atalhos
       {
         ProcessoServer.Encerrar(processo);
       }      
-    }
-
-    public void ApagarBrokers(string caminhoAmbiente)
-    {
-      ApagarBroker(caminhoAmbiente);
-      ApagarBrokerCustom(caminhoAmbiente);
     }
 
     public void ApagarBroker(string caminhoAmbiente)
@@ -115,34 +109,14 @@ namespace Atalhos
       return ArquivoServer.ExisteDll(caminhoAmbiente, string.Empty, "RM.Cst.");
     }
 
-    public void IniciarApp(Atalho atalho)
-    {
-      ProcessoServer.Iniciar(atalho.Caminho);
-    }
-
     public void IniciarAppComArgumentos(Atalho atalho)
 		{
 			ProcessoServer.Iniciar(atalho.Caminho, atalho.Argumentos);
 		}
 
-    public void IniciarAppComoAdminComArgumentos(Atalho atalho)
-    {
-      ProcessoServer.IniciarComoAdministrador(atalho.Caminho, atalho.Argumentos);
-    }
-
-    public void IniciarAppComoAdmin(Atalho atalho)
-    {
-      ProcessoServer.IniciarComoAdministrador(atalho.Caminho);
-    }
-
     public void IniciarAppComPrivilegios(Atalho atalho)
     {
       ProcessoServer.IniciarComoAdministrador(atalho.Caminho, atalho.Argumentos);
-    }
-
-    public void IniciarAppComPrivilegiosSemArgumentos(Atalho atalho)
-    {
-      ProcessoServer.IniciarComoAdministrador(atalho.Caminho);
     }
 
     public void CarregarAtalhos(Dictionary<string, string> listAtalhos,ref Ambiente ambiente)
@@ -150,27 +124,18 @@ namespace Atalhos
       AmbienteServer.CarregarAtalhos(listAtalhos, ref ambiente);
     }
 
-		public void IniciarAmbiente(Ambiente ambiente, bool apagaBrokerCustom)
+		public void IniciarAmbiente(Ambiente ambiente, bool exeComArgumentos, bool apagaBrokerCustom)
 		{
       if(apagaBrokerCustom)
 			  ApagarBrokerCustom(ambiente.FullName);
         ApagarDllCustom(ambiente.Bin);
 
-      Task task = Task.Run(() => IniciarRmEHost(ambiente));
+      Task task = Task.Run(() => IniciarRmEHost(ambiente, exeComArgumentos));
 		}
 
-		private void IniciarRmEHost(Ambiente ambiente)
+		private void IniciarRmEHost(Ambiente ambiente, bool exeComArgumentos)
 		{
-			Atalho rmExe = ambiente.Arquivos.Find(x => x.Nome == "RM.exe");
-			Atalho host = ambiente.Arquivos.Find(x => x.Nome == "RM.Host.exe");
-
-			IniciarAppComPrivilegios(host);
-
-      Thread.Sleep(7000);
-
-      //TODO: var hostIniciado = VerificarSeProcessoEstaEmExecucao("RM.Host");
-
-      IniciarAppComPrivilegios(rmExe);
+      ProcessoServer.IniciarExeEHost(ambiente.Arquivos.Find(x => x.Nome == "RM.exe"), ambiente.Arquivos.Find(x => x.Nome == "RM.Host.exe"), exeComArgumentos);
 		}
 
     public IEnumerable<AliasConfig> LerAlias(Ambiente ambiente)

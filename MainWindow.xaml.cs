@@ -51,7 +51,7 @@ namespace Atalhos
     }
     private ConfigController _configController;
 
-    private Dictionary<Keys, Action> _shortcuts;
+    //private Dictionary<Keys, Action> _shortcuts; //TODO: remover
     #endregion
 
     public MainWindow()
@@ -64,22 +64,24 @@ namespace Atalhos
     {
       ValidarVersao();
       LerAmbientes();
+      int indiceFavorito = 0;
 
-      foreach (var item in ListaAmbiente)
+      for(int i = 0; i < ListaAmbiente.Count; i++)
       {
-        cbxAmbiente.Items.Add(item.Unidade + item.Nome);
+        var ambiente = ListaAmbiente[i];
+        cbxAmbiente.Items.Add(ambiente.Unidade + ambiente.Nome);
+        if (ambiente.Nome == "Release")
+        {
+          indiceFavorito = i;
+        }
       }
-      cbxAmbiente.SelectedIndex = 0;
+      cbxAmbiente.SelectedIndex = indiceFavorito;
       lblLog.Text = string.Empty;
     }
 
     private void LerAmbientes()
     {
-      var unidades = DriveInfo.GetDrives().Where(x => x.DriveType == DriveType.Fixed).Select(x => x.Name).ToList();
-      foreach (var unidade in unidades)
-      {
-        ListaAmbiente.AddRange(AmbienteController.LerAmbientes($"{unidade}RM\\Legado", ListaAtalhos));
-      }
+      ListaAmbiente.AddRange(AmbienteController.LerAmbientes(ListaAtalhos));
 
       if (ListaAmbiente.Count == 0)
       {
@@ -138,7 +140,6 @@ namespace Atalhos
         Alias = AmbienteController.LerAlias(AmbienteAtual);
         if (Alias != null && cbxAlias.SelectedItem != null)
           AmbienteAtual.ControlaIIS = Alias.ToList().Find(x => x.NomeAlias == cbxAlias.SelectedItem.ToString()).ControlaIIS;
-         //= Alias.ToList().Find(x => x.NomeAlias == cbxAlias.SelectedItem.ToString()).ControlaIIS;
       }
     }
 
@@ -176,20 +177,6 @@ namespace Atalhos
         AmbienteController.ReciclarAppPool();
     }
 
-    private void IniciarAppSemArgumentos(string app, bool privilegios)
-    {
-      SetAmbienteAtual();
-      var atalho = AmbienteAtual.Arquivos.Find(x => x.Nome == app);
-      if (atalho == null)
-        return;
-      if (privilegios)
-      {
-        AmbienteController.IniciarAppComPrivilegiosSemArgumentos(AmbienteAtual.Arquivos.Find(x => x.Nome == app));
-        return;
-      }
-      AmbienteController.IniciarApp(AmbienteAtual.Arquivos.Find(x => x.Nome == app));
-    }
-
     private void Encerrar_Click(object sender, RoutedEventArgs e)
     {
       MouseFeedBack();
@@ -201,8 +188,9 @@ namespace Atalhos
     {
       MouseFeedBack();
       SetAmbienteAtual();
+
       if (AmbienteAtual != null && AmbienteAtual.Arquivos.Count > 0)
-        AmbienteController.IniciarAmbiente(AmbienteAtual, (bool)this.chkDelCustom.IsChecked);
+        AmbienteController.IniciarAmbiente(AmbienteAtual, (bool)chkLogin.IsChecked, (bool)chkDelCustom.IsChecked);
     }
 
     private void cbxAmbiente_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -233,12 +221,7 @@ namespace Atalhos
     private void btnRMexe_Click(object sender, RoutedEventArgs e)
     {
       MouseFeedBack();
-      if ((bool)chkLogin.IsChecked)
-      {
-        IniciarApp("RM.exe", true);
-        return;
-      }
-      IniciarAppSemArgumentos("RM.exe", true);
+      bntIniciar_Click(sender, e);
     }
 
     private void btnHost_Click(object sender, RoutedEventArgs e)
@@ -310,18 +293,6 @@ namespace Atalhos
       Mouse.SetCursor(System.Windows.Input.Cursors.Wait);
       Thread.Sleep(500);
       Mouse.SetCursor(System.Windows.Input.Cursors.Arrow);
-    }
-
-    private void btnSalvarUser_Click(object sender, RoutedEventArgs e)
-    {
-      MouseFeedBack();
-      var Controller = new ControllerBase();
-      Controller.SalvarAlias(new AliasConfig
-      {
-        Versao = AmbienteAtual.Nome,
-        NomeAlias = cbxAlias.SelectedItem.ToString(),
-        Unidade = AmbienteAtual.Unidade,
-      });
     }
 
     private void btnNovoAlias_Click(object sender, RoutedEventArgs e)
