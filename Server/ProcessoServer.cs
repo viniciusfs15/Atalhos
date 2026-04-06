@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 
 namespace Atalhos.Server
 {
@@ -35,7 +36,7 @@ namespace Atalhos.Server
       {
         Process p = Process.Start(startInfo);
       }
-      catch (System.ComponentModel.Win32Exception ex)
+      catch
       {
         return;
       }
@@ -54,10 +55,36 @@ namespace Atalhos.Server
       {
         Process p = Process.Start(startInfo);
       }
-      catch (System.ComponentModel.Win32Exception ex)
+      catch
       {
         return;
       }
+    }
+
+    public void IniciarExeEHost(Atalho rmExe, Atalho host, bool exeComArgumentos)
+    {
+      var hostCheck = new RMHostCheck(rmExe.Caminho);
+      var check = hostCheck.CheckHostActivity();
+      
+      if (!check)
+      {
+        IniciarComoAdministrador(host.Caminho);
+
+        var timeout = 15;
+        for (int i = 0; i < timeout; i++)
+        {
+          if (hostCheck.CheckHostActivity())
+          {
+            break;
+          }
+          Thread.Sleep(1000);
+        }
+      }        
+
+      if (exeComArgumentos)
+        IniciarComoAdministrador(rmExe.Caminho, rmExe.Argumentos);
+      else
+        IniciarComoAdministrador(rmExe.Caminho);
     }
   }
 }

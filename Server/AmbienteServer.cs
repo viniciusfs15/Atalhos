@@ -71,5 +71,19 @@ namespace Atalhos.Server
 
       return ambienteTemp.Arquivos;
 		}
+
+    public List<Ambiente> ListarAmbientes(List<Atalho> listaAtalhos)
+    {
+      List<Ambiente> listaAmbientes = new List<Ambiente>();
+      var unidades = DriveInfo.GetDrives().Where(x => x.DriveType == DriveType.Fixed).Select(x => x.Name).ToList();
+      foreach (var unidade in unidades)
+      {
+        listaAmbientes.AddRange(LerDiretorios($"{unidade}RM\\Legado", listaAtalhos));
+        listaAmbientes.AddRange(LerDiretorios($"{unidade}RM\\Atual", listaAtalhos));
+        listaAmbientes.AddRange(LerDiretorios($"{unidade}Linha-RM\\Legado", listaAtalhos));
+        listaAmbientes.AddRange(LerDiretorios($"{unidade}Linha-RM\\Atual", listaAtalhos));
+      }
+      return listaAmbientes;
+    }
 	}
 }
