@@ -14,6 +14,6 @@
     public const string Bin = "Bin";
     public const string Custom = "Custom";
     public static string FrameHTML = "FrameHTML";
-    public static string CorporeNet = "CorporeNet";
+    public static string CorporeNet = "Corpore.Net";
   }
 }
