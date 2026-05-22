@@ -1,5 +1,15 @@
 # Atalhos
 
+![GitHub repo size](https://img.shields.io/github/repo-size/viniciusfs15/atalhos?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/viniciusfs15/atalhos?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/viniciusfs15/atalhos?style=for-the-badge)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/viniciusfs15/Atalhos?style=for-the-badge)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/viniciusfs15/Atalhos?style=for-the-badge)
+
+<img width="128" height="128" alt="AtalhoIcone" src="https://github.com/user-attachments/assets/c94db6b6-09e6-4dd9-811f-58639360463d" />
+
+# Atalhos
+
 ## 📋 Objetivo do Projeto
 
 O **Atalhos** é uma aplicação desktop desenvolvida para auxiliar desenvolvedores na inicialização e gerenciamento do serviço de Host e aplicação RM.exe do ERP TOTVS RM. A ferramenta oferece uma interface intuitiva para facilitar o acesso rápido aos ambientes e atalhos configurados, economizando tempo em tarefas repetitivas.
@@ -28,7 +38,7 @@ Para instalar o Atalhos, siga estas etapas:
 
 Após executar o `Atalhos.exe`, você será apresentado à interface principal da aplicação.
 
-**[ADICIONAR PRINT DA TELA PRINCIPAL AQUI]**
+<img width="949" height="453" alt="TelaPrincipal" src="https://github.com/user-attachments/assets/a6d789b8-4b52-4269-9e53-a8019239f7ed" />
 
 A tela principal oferece acesso rápido aos seguintes funcionalidades:
 - Listar ambientes configurados
@@ -51,8 +61,6 @@ A tela principal é o coração da aplicação. Nela você pode:
 - **Acessar Atalhos:** Visualize e execute atalhos rápidos disponíveis para o ambiente como abrir pastas, ferramentas auxiliares, IIS,etc.
 - **Minimizar para a bandeja do Windows:** Mantenha a aplicação sempre acessível sem ocupar espaço na barra de tarefas
 
-**[ADICIONAR PRINT DA INTERFACE PRINCIPAL AQUI]**
-
 #### Funcionalidades principais:
 - Interface amigável com tema Material Design
 - Integração com a bandeja do sistema (system tray)
@@ -65,7 +73,7 @@ A tela principal é o coração da aplicação. Nela você pode:
 
 O Atalhos oferece a funcionalidade de minimizar a aplicação para a bandeja do sistema do Windows, permitindo que você mantenha a ferramenta sempre acessível sem ocupar espaço na barra de tarefas.
 
-**[ADICIONAR PRINT DO TRAY COM MENUS AQUI]**
+<img width="377" height="230" alt="Tray3" src="https://github.com/user-attachments/assets/e1bb4642-b669-4e9a-b6cb-2a1c80e0c42a" />
 
 #### Como usar:
 
@@ -99,7 +107,7 @@ O Atalhos oferece a funcionalidade de minimizar a aplicação para a bandeja do 
 
 O Editor de Ambientes permite configurar os detalhes de cada ambiente de trabalho.
 
-**[ADICIONAR PRINT DO FORM DE EDIÇÃO DE AMBIENTES AQUI]**
+<img width="644" height="345" alt="AmbienteConfig" src="https://github.com/user-attachments/assets/43f0a37a-584b-4a55-805a-32956867339d" />
 
 #### Como usar:
 
@@ -127,7 +135,7 @@ Isso é especialmente útil para garantir que os caminhos estejam sempre atualiz
 
 O Editor de Alias permite criar atalhos personalizados para executáveis ou caminhos específicos dentro de um ambiente.
 
-**[ADICIONAR PRINT DO FORM DE EDIÇÃO DE ALIAS AQUI]**
+<img width="821" height="604" alt="AliasConfig" src="https://github.com/user-attachments/assets/ee769847-bf40-4dee-8709-8bce01785661" />
 
 #### Como usar:
 
