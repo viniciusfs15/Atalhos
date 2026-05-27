@@ -11,3 +11,5 @@ Atalhos-Core/obj/
 /Atalhos/obj
 /Atalhos/bin/Debug/net8.0-windows
 /Atalhos/.vscode
+/Atalhos/bin/Release/net8.0-windows/runtimes
+/Atalhos/bin/Release/net8.0-windows
