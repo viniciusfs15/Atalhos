@@ -1,10 +1,6 @@
 # Atalhos
 
-![GitHub repo size](https://img.shields.io/github/repo-size/viniciusfs15/atalhos?style=for-the-badge)
-![GitHub language count](https://img.shields.io/github/languages/count/viniciusfs15/atalhos?style=for-the-badge)
-![GitHub forks](https://img.shields.io/github/forks/viniciusfs15/atalhos?style=for-the-badge)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/viniciusfs15/Atalhos?style=for-the-badge)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/viniciusfs15/Atalhos?style=for-the-badge)
+## 📋 Objetivo do Projeto
 
 <img width="128" height="128" alt="AtalhoIcone" src="https://github.com/user-attachments/assets/c94db6b6-09e6-4dd9-811f-58639360463d" />
 
@@ -60,6 +56,8 @@ A tela principal é o coração da aplicação. Nela você pode:
 - **Iniciar Host ou RM.exe:** Com um clique, inicie os serviços necessários para o ambiente selecionado
 - **Acessar Atalhos:** Visualize e execute atalhos rápidos disponíveis para o ambiente como abrir pastas, ferramentas auxiliares, IIS,etc.
 - **Minimizar para a bandeja do Windows:** Mantenha a aplicação sempre acessível sem ocupar espaço na barra de tarefas
+
+**[ADICIONAR PRINT DA INTERFACE PRINCIPAL AQUI]**
 
 #### Funcionalidades principais:
 - Interface amigável com tema Material Design
