@@ -82,10 +82,10 @@
       materialCard1.Depth = 0;
       materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard1.Location = new Point(10, 113);
-      materialCard1.Margin = new Padding(5, 5, 5, 5);
+      materialCard1.Margin = new Padding(5);
       materialCard1.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard1.Name = "materialCard1";
-      materialCard1.Padding = new Padding(14, 14, 14, 14);
+      materialCard1.Padding = new Padding(14);
       materialCard1.Size = new Size(243, 288);
       materialCard1.TabIndex = 13;
       // 
@@ -333,10 +333,10 @@
       materialCard2.Depth = 0;
       materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard2.Location = new Point(264, 113);
-      materialCard2.Margin = new Padding(14, 14, 14, 14);
+      materialCard2.Margin = new Padding(14);
       materialCard2.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard2.Name = "materialCard2";
-      materialCard2.Padding = new Padding(14, 14, 14, 14);
+      materialCard2.Padding = new Padding(14);
       materialCard2.Size = new Size(338, 288);
       materialCard2.TabIndex = 6;
       // 
@@ -389,10 +389,10 @@
       materialCard3.Depth = 0;
       materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard3.Location = new Point(13, 99);
-      materialCard3.Margin = new Padding(14, 14, 14, 14);
+      materialCard3.Margin = new Padding(14);
       materialCard3.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard3.Name = "materialCard3";
-      materialCard3.Padding = new Padding(14, 14, 14, 14);
+      materialCard3.Padding = new Padding(14);
       materialCard3.Size = new Size(314, 80);
       materialCard3.TabIndex = 0;
       // 
@@ -521,10 +521,10 @@
       materialCard4.Depth = 0;
       materialCard4.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard4.Location = new Point(612, 113);
-      materialCard4.Margin = new Padding(14, 14, 14, 14);
+      materialCard4.Margin = new Padding(14);
       materialCard4.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard4.Name = "materialCard4";
-      materialCard4.Padding = new Padding(14, 14, 14, 14);
+      materialCard4.Padding = new Padding(14);
       materialCard4.Size = new Size(325, 288);
       materialCard4.TabIndex = 5;
       // 
@@ -706,16 +706,16 @@
       // 
       // contextMenuStripTray
       // 
-      contextMenuStripTray.ImageScalingSize = new Size(20, 20);
       contextMenuStripTray.Name = "contextMenuStripTray";
       contextMenuStripTray.RenderMode = ToolStripRenderMode.System;
       contextMenuStripTray.Size = new Size(61, 4);
       // 
       // AtalhosMainForm
       // 
-      AutoScaleMode = AutoScaleMode.None;
+      AutoScaleDimensions = new SizeF(7F, 15F);
+      AutoScaleMode = AutoScaleMode.Font;
       BackColor = Color.FromArgb(64, 64, 64);
-      ClientSize = new Size(946, 452);
+      ClientSize = new Size(941, 448);
       Controls.Add(chkOnTray);
       Controls.Add(lblLog);
       Controls.Add(chkFavorito);
