@@ -706,7 +706,6 @@ namespace Atalhos
       // 
       // contextMenuStripTray
       // 
-      contextMenuStripTray.ImageScalingSize = new Size(20, 20);
       contextMenuStripTray.Name = "contextMenuStripTray";
       contextMenuStripTray.RenderMode = ToolStripRenderMode.System;
       contextMenuStripTray.Size = new Size(61, 4);

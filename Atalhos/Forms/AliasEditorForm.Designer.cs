@@ -1,4 +1,4 @@
-﻿namespace Atalhos
+namespace Atalhos
 {
     partial class AliasEditorForm
   {
@@ -714,6 +714,7 @@
       FormBorderStyle = FormBorderStyle.Sizable;
       Icon = (Icon)resources.GetObject("$this.Icon");
       Name = "AliasEditorForm";
+      Sizable = false;
       StartPosition = FormStartPosition.CenterScreen;
       Text = "Editor de Alias";
       Load += AliasEditorForm_Load;

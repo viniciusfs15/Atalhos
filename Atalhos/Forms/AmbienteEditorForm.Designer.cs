@@ -1,4 +1,4 @@
-﻿namespace Atalhos
+namespace Atalhos
 {
   partial class AmbienteEditorForm
   {
