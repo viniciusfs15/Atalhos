@@ -1,10 +1,12 @@
-# Atalhos
+![GitHub repo size](https://img.shields.io/github/repo-size/viniciusfs15/atalhos?style=for-the-badge)
+![GitHub language count](https://img.shields.io/github/languages/count/viniciusfs15/atalhos?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/viniciusfs15/atalhos?style=for-the-badge)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/viniciusfs15/Atalhos?style=for-the-badge)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues-pr/viniciusfs15/Atalhos?style=for-the-badge)
 
-## 📋 Objetivo do Projeto
+# Atalhos
 
 <img width="128" height="128" alt="AtalhoIcone" src="https://github.com/user-attachments/assets/c94db6b6-09e6-4dd9-811f-58639360463d" />
-
-# Atalhos
 
 ## 📋 Objetivo do Projeto
 
