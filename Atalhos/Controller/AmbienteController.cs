@@ -1,8 +1,9 @@
-﻿using Atalhos.Server;
+using Atalhos.Server;
 using System.Text;
 using Atalhos.DTO;
 using Atalhos.Models;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Atalhos.Controller
 {
@@ -143,18 +144,78 @@ namespace Atalhos.Controller
 
     public void IniciarAmbiente(AmbienteDTO ambiente, bool exeComArgumentos, bool apagaBrokerCustom, bool apagarBroker)
     {
+      if (ambiente == null)
+        return;
+
+      var ambienteEhSmartClient = ambiente.EhSmartClient || EhSmartClient(ambiente.FullName);
+
+      if (ambienteEhSmartClient)
+      {
+        apagaBrokerCustom = false;
+        apagarBroker = false;
+      }
+
       if (apagaBrokerCustom)
         ApagarBrokerCustom(ambiente.Bin);
 
       if (apagarBroker)
         ApagarBroker(ambiente.Bin);
 
-      Task task = Task.Run(() => IniciarRmEHost(ambiente, exeComArgumentos));
+      IniciarRmEHost(ambiente, exeComArgumentos);
+    }
+
+    public async Task IniciarAmbienteAsync(AmbienteDTO ambiente, bool exeComArgumentos, bool apagaBrokerCustom, bool apagarBroker)
+    {
+      if (ambiente == null)
+        return;
+
+      var ambienteEhSmartClient = ambiente.EhSmartClient || EhSmartClient(ambiente.FullName);
+
+      if (ambienteEhSmartClient)
+      {
+        apagaBrokerCustom = false;
+        apagarBroker = false;
+      }
+
+      if (apagaBrokerCustom)
+        ApagarBrokerCustom(ambiente.Bin);
+
+      if (apagarBroker)
+        ApagarBroker(ambiente.Bin);
+
+      await IniciarRmEHostAsync(ambiente, exeComArgumentos);
     }
 
     private void IniciarRmEHost(AmbienteDTO ambiente, bool exeComArgumentos)
     {
+      if (ambiente.EhSmartClient || EhSmartClient(ambiente.FullName))
+      {
+        var rmExe = Path.Combine(ambiente.FullName, "RM.exe");
+        ProcessoServer.IniciarComoAdministrador(rmExe);
+
+        return;
+      }
+
       ProcessoServer.IniciarExeEHost(ambiente.Arquivos.Find(x => x.Nome == "RM.exe"), ambiente.Arquivos.Find(x => x.Nome == "RM.Host.exe"), exeComArgumentos);
+    }
+
+    private async Task IniciarRmEHostAsync(AmbienteDTO ambiente, bool exeComArgumentos)
+    {
+      if (ambiente.EhSmartClient || EhSmartClient(ambiente.FullName))
+      {
+        var rmExe = ambiente.Arquivos.Find(x => x.Nome == StringConstantes.RM_Exe);
+        if (rmExe == null)
+          return;
+
+        if (exeComArgumentos)
+          ProcessoServer.IniciarComoAdministrador(rmExe.Caminho, rmExe.Argumentos);
+        else
+          ProcessoServer.IniciarComoAdministrador(rmExe.Caminho);
+
+        return;
+      }
+
+      await ProcessoServer.IniciarExeEHostAsync(ambiente.Arquivos.Find(x => x.Nome == "RM.exe"), ambiente.Arquivos.Find(x => x.Nome == "RM.Host.exe"), exeComArgumentos);
     }
 
     internal string ObterLog(AmbienteDTO ambienteAtual)
@@ -216,7 +277,7 @@ namespace Atalhos.Controller
       if (ambienteAtual == null) return new List<AtalhoDTO>();
       var alias = aliases.ToList().Where(x => x.Versao == ambienteAtual.Nome && x.NomeAlias == nomeAlias).FirstOrDefault();
       var nomesAtalhos = GetNomesAtalhos(aliases, nomeAmbiente, nomeAlias);
-      var pastaPadrao = ambienteAtual.FullName.Contains("CorporeRM") ? "RM.Net" : "Bin";
+      var pastaPadrao = GetPastaBinarios(ambienteAtual.FullName);
       var listaAtalhos = new List<AtalhoDTO>();
 
       if (nomesAtalhos == null)
@@ -224,10 +285,44 @@ namespace Atalhos.Controller
 
       foreach (var nome in nomesAtalhos)
       {
-        var caminho = Path.Combine(ambienteAtual.FullName, pastaPadrao, nome.Key);
+        var caminho = string.IsNullOrWhiteSpace(pastaPadrao)
+          ? Path.Combine(ambienteAtual.FullName, nome.Key)
+          : Path.Combine(ambienteAtual.FullName, pastaPadrao, nome.Key);
         listaAtalhos.Add(new AtalhoDTO(nome.Key, caminho, nome.Value));
       }
       return listaAtalhos;
+    }
+
+    private static string GetPastaBinarios(string fullName)
+    {
+      if (EhInstalado(fullName))
+        return StringConstantes.RM_Net;
+
+      if (EhSmartClient(fullName))
+        return string.Empty;
+
+      return StringConstantes.Bin;
+    }
+
+    private static bool EhInstalado(string fullName)
+    {
+      if (string.IsNullOrWhiteSpace(fullName))
+        return false;
+
+      var rmExe = Path.Combine(fullName, StringConstantes.RM_Net, StringConstantes.RM_Exe);
+      var hostExe = Path.Combine(fullName, StringConstantes.RM_Net, StringConstantes.RM_Host_Exe);
+      return File.Exists(rmExe) && File.Exists(hostExe);
+    }
+
+    private static bool EhSmartClient(string fullName)
+    {
+      if (string.IsNullOrWhiteSpace(fullName))
+        return false;
+
+      var rmExe = Path.Combine(fullName, StringConstantes.RM_Exe);
+      var aliasManager = Path.Combine(fullName, StringConstantes.RM_AliasManager);
+      var hostExe = Path.Combine(fullName, StringConstantes.RM_Host_Exe);
+      return File.Exists(rmExe) && File.Exists(aliasManager) && !File.Exists(hostExe);
     }
 
     internal void SaveAmbiente(AmbienteDTO ambienteAtual)

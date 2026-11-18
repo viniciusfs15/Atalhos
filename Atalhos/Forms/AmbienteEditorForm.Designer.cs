@@ -1,4 +1,4 @@
-﻿namespace Atalhos
+namespace Atalhos
 {
   partial class AmbienteEditorForm
   {
@@ -356,12 +356,10 @@
       // 
       // AmbienteEditorForm
       // 
-      AutoScaleDimensions = new SizeF(7F, 15F);
-      AutoScaleMode = AutoScaleMode.Font;
+      AutoScaleMode = AutoScaleMode.None;
       BackColor = SystemColors.Desktop;
       ClientSize = new Size(642, 327);
       Controls.Add(materialCard1);
-      MaximizeBox = false;
       Name = "AmbienteEditorForm";
       Sizable = false;
       StartPosition = FormStartPosition.CenterScreen;

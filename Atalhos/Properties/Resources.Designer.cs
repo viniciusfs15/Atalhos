@@ -251,6 +251,366 @@ namespace Atalhos.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abrir IIS.
+        /// </summary>
+        internal static string SAtaAbrirIIS {
+            get {
+                return ResourceManager.GetString("SAtaAbrirIIS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abrir janela principal.
+        /// </summary>
+        internal static string SAtaAbrirJanelaPrincipal {
+            get {
+                return ResourceManager.GetString("SAtaAbrirJanelaPrincipal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aliases.
+        /// </summary>
+        internal static string SAtaAliases {
+            get {
+                return ResourceManager.GetString("SAtaAliases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RM.AliasManager.
+        /// </summary>
+        internal static string SAtaAliasManager {
+            get {
+                return ResourceManager.GetString("SAtaAliasManager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alias salvo com sucesso!.
+        /// </summary>
+        internal static string SAtaAliasSalvoComSucesso {
+            get {
+                return ResourceManager.GetString("SAtaAliasSalvoComSucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ambiente: {0}.
+        /// </summary>
+        internal static string SAtaAmbiente {
+            get {
+                return ResourceManager.GetString("SAtaAmbiente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atalho.
+        /// </summary>
+        internal static string SAtaAtalho {
+            get {
+                return ResourceManager.GetString("SAtaAtalho", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atalhos.
+        /// </summary>
+        internal static string SAtaAtalhos {
+            get {
+                return ResourceManager.GetString("SAtaAtalhos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Atenção.
+        /// </summary>
+        internal static string SAtaAtencao {
+            get {
+                return ResourceManager.GetString("SAtaAtencao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RM.Atualizador.
+        /// </summary>
+        internal static string SAtaAtualizador {
+            get {
+                return ResourceManager.GetString("SAtaAtualizador", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bin/RM.net.
+        /// </summary>
+        internal static string SAtaBinNet {
+            get {
+                return ResourceManager.GetString("SAtaBinNet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broker.
+        /// </summary>
+        internal static string SAtaBroker {
+            get {
+                return ResourceManager.GetString("SAtaBroker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Broker Custom.
+        /// </summary>
+        internal static string SAtaBrokerCustom {
+            get {
+                return ResourceManager.GetString("SAtaBrokerCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Caminhos normalizados com sucesso!.
+        /// </summary>
+        internal static string SAtaCaminhosNormalizadosComSucesso {
+            get {
+                return ResourceManager.GetString("SAtaCaminhosNormalizadosComSucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo &apos;Base de Dados&apos; é obrigatório..
+        /// </summary>
+        internal static string SAtaCampoBaseDadosObrigatorio {
+            get {
+                return ResourceManager.GetString("SAtaCampoBaseDadosObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo &apos;Nome do Alias&apos; é obrigatório..
+        /// </summary>
+        internal static string SAtaCampoNomeAliasObrigatorio {
+            get {
+                return ResourceManager.GetString("SAtaCampoNomeAliasObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo &apos;Senha do Banco de Dados&apos; é obrigatório..
+        /// </summary>
+        internal static string SAtaCampoSenhaBancoDadosObrigatorio {
+            get {
+                return ResourceManager.GetString("SAtaCampoSenhaBancoDadosObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo &apos;Servidor&apos; é obrigatório..
+        /// </summary>
+        internal static string SAtaCampoServidorObrigatorio {
+            get {
+                return ResourceManager.GetString("SAtaCampoServidorObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo &apos;Usuário do Banco de Dados&apos; é obrigatório..
+        /// </summary>
+        internal static string SAtaCampoUsuarioBancoDadosObrigatorio {
+            get {
+                return ResourceManager.GetString("SAtaCampoUsuarioBancoDadosObrigatorio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configurações salvas com sucesso!.
+        /// </summary>
+        internal static string SAtaConfiguracoesSalvasComSucesso {
+            get {
+                return ResourceManager.GetString("SAtaConfiguracoesSalvasComSucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmação.
+        /// </summary>
+        internal static string SAtaConfirmacao {
+            get {
+                return ResourceManager.GetString("SAtaConfirmacao", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Corpore.Net.
+        /// </summary>
+        internal static string SAtaCorporeNet {
+            get {
+                return ResourceManager.GetString("SAtaCorporeNet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encerrar RM.exe.
+        /// </summary>
+        internal static string SAtaEncerrarExe {
+            get {
+                return ResourceManager.GetString("SAtaEncerrarExe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encerrar RM.exe e Hosts.
+        /// </summary>
+        internal static string SAtaEncerrarExeHosts {
+            get {
+                return ResourceManager.GetString("SAtaEncerrarExeHosts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encerrar Host.
+        /// </summary>
+        internal static string SAtaEncerrarHost {
+            get {
+                return ResourceManager.GetString("SAtaEncerrarHost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro.
+        /// </summary>
+        internal static string SAtaErro {
+            get {
+                return ResourceManager.GetString("SAtaErro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao iniciar ambiente: {0}.
+        /// </summary>
+        internal static string SAtaErroIniciarAmbiente {
+            get {
+                return ResourceManager.GetString("SAtaErroIniciarAmbiente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Erro ao salvar alias: {0}.
+        /// </summary>
+        internal static string SAtaErroSalvarAlias {
+            get {
+                return ResourceManager.GetString("SAtaErroSalvarAlias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Existe nova versão disponível!{0}Deseja acessar a página de download?.
+        /// </summary>
+        internal static string SAtaExisteNovaVersaoDisponivelNDesejaAcessar {
+            get {
+                return ResourceManager.GetString("SAtaExisteNovaVersaoDisponivelNDesejaAcessar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Frame HTML.
+        /// </summary>
+        internal static string SAtaFrameHTML {
+            get {
+                return ResourceManager.GetString("SAtaFrameHTML", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iniciar.
+        /// </summary>
+        internal static string SAtaIniciar {
+            get {
+                return ResourceManager.GetString("SAtaIniciar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iniciar apagando:.
+        /// </summary>
+        internal static string SAtaIniciarApagando {
+            get {
+                return ResourceManager.GetString("SAtaIniciarApagando", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nenhum ambiente encontrado.
+        /// </summary>
+        internal static string SAtaNenhumAmbienteEncontrado {
+            get {
+                return ResourceManager.GetString("SAtaNenhumAmbienteEncontrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reciclar App Pool.
+        /// </summary>
+        internal static string SAtaReciclarAppPool {
+            get {
+                return ResourceManager.GetString("SAtaReciclarAppPool", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reiniciar IIS.
+        /// </summary>
+        internal static string SAtaReiniciarIIS {
+            get {
+                return ResourceManager.GetString("SAtaReiniciarIIS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sair.
+        /// </summary>
+        internal static string SAtaSair {
+            get {
+                return ResourceManager.GetString("SAtaSair", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Selecione um alias para excluir..
+        /// </summary>
+        internal static string SAtaSelecioneAliasParaExcluir {
+            get {
+                return ResourceManager.GetString("SAtaSelecioneAliasParaExcluir", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sucesso.
+        /// </summary>
+        internal static string SAtaSucesso {
+            get {
+                return ResourceManager.GetString("SAtaSucesso", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tem certeza que deseja excluir o alias &apos;{0}&apos;?.
+        /// </summary>
+        internal static string SAtaTemCertezaQueDesejaExcluirAlias {
+            get {
+                return ResourceManager.GetString("SAtaTemCertezaQueDesejaExcluirAlias", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todos os Broker.
+        /// </summary>
+        internal static string SAtaTodosBroker {
+            get {
+                return ResourceManager.GetString("SAtaTodosBroker", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Settings {

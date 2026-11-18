@@ -1,4 +1,3 @@
-using Atalhos;
 using Atalhos.DTO;
 using MaterialSkin3.Controls;
 
@@ -30,10 +29,10 @@ namespace Atalhos
 
     private AliasController _controller = new AliasController();
 
-    private void MouseFeedBack()
+    private async Task MouseFeedBack()
     {
       Cursor.Current = Cursors.WaitCursor;
-      Thread.Sleep(500);
+      await Task.Delay(500);
       Cursor.Current = Cursors.Default;
     }
 
@@ -94,6 +93,7 @@ namespace Atalhos
       LimparCampos();
       if (string.IsNullOrWhiteSpace(nomeAlias) || _listAlias == null || !_listAlias.Any()) return;
       var alias = _listAlias.FirstOrDefault(x => x.NomeAlias == nomeAlias);
+      if (alias == null) return;
 
       chkHabilitaProcessJobs.Checked = alias.JobServerEnabled;
       chkHabilitaPoolProcessos.Checked = alias.JobServerProcessPoolEnabled;
@@ -144,27 +144,27 @@ namespace Atalhos
     {
       if (string.IsNullOrWhiteSpace(txtNomeAlias.Text))
       {
-        MessageBox.Show("O campo 'Nome do Alias' é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show(Properties.Resources.SAtaCampoNomeAliasObrigatorio, Properties.Resources.SAtaAtencao, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return false;
       }
       if (string.IsNullOrWhiteSpace(txtServidor.Text))
       {
-        MessageBox.Show("O campo 'Servidor' é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show(Properties.Resources.SAtaCampoServidorObrigatorio, Properties.Resources.SAtaAtencao, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return false;
       }
       if (string.IsNullOrWhiteSpace(txtBase.Text))
       {
-        MessageBox.Show("O campo 'Base de Dados' é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show(Properties.Resources.SAtaCampoBaseDadosObrigatorio, Properties.Resources.SAtaAtencao, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return false;
       }
       if (string.IsNullOrWhiteSpace(txtUsuarioBd.Text))
       {
-        MessageBox.Show("O campo 'Usuário do Banco de Dados' é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show(Properties.Resources.SAtaCampoUsuarioBancoDadosObrigatorio, Properties.Resources.SAtaAtencao, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return false;
       }
       if (string.IsNullOrWhiteSpace(txtSenhaBd.Text))
       {
-        MessageBox.Show("O campo 'Senha do Banco de Dados' é obrigatório.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show(Properties.Resources.SAtaCampoSenhaBancoDadosObrigatorio, Properties.Resources.SAtaAtencao, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return false;
       }
       return true;
@@ -176,18 +176,19 @@ namespace Atalhos
       AtualizarCampos(string.Empty);
     }
 
-    private void btnExcluir_Click(object sender, EventArgs e)
+    private async void btnExcluir_Click(object sender, EventArgs e)
     {
-      MouseFeedBack();
-      if (_aliasAtual == null)
+      var aliasParaExcluir = _aliasAtual;
+      await MouseFeedBack();
+      if (aliasParaExcluir == null)
       {
-        MessageBox.Show("Selecione um alias para excluir.", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show(Properties.Resources.SAtaSelecioneAliasParaExcluir, Properties.Resources.SAtaAtencao, MessageBoxButtons.OK, MessageBoxIcon.Warning);
         return;
       }
-      var confirmResult = MessageBox.Show($"Tem certeza que deseja excluir o alias '{_aliasAtual.NomeAlias}'?", "Confirmação", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+      var confirmResult = MessageBox.Show(string.Format(Properties.Resources.SAtaTemCertezaQueDesejaExcluirAlias, aliasParaExcluir.NomeAlias), Properties.Resources.SAtaConfirmacao, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
       if (confirmResult == DialogResult.Yes)
       {
-        _controller.RemoveAlias(_aliasAtual);
+        _controller.RemoveAlias(aliasParaExcluir);
         CarregarGridAlias();
       }
     }
@@ -200,21 +201,31 @@ namespace Atalhos
       if (selecionado == null) return;
 
       var alias = _listAlias.FirstOrDefault(x => x.NomeAlias == selecionado.Text);
+      if (alias == null) return;
       AtualizarCampos(alias.NomeAlias);
       _aliasAtual = alias;
     }
 
-    private void btnSalvar_Click(object sender, EventArgs e)
+    private async void btnSalvar_Click(object sender, EventArgs e)
     {
       var selecionado = lstAliases.SelectedItems.Cast<ListViewItem>().FirstOrDefault();
-      MouseFeedBack();
+      var aliasOriginal = _aliasAtual;
+      var aliasEditado = CriarObjetoAlias();
+      await MouseFeedBack();
       if (!ValidarPreenchimentoDosCampos()) return;
-      if (lstAliases.SelectedItems.Count == 0 || selecionado == null)
-        _controller.AddAlias(Ambiente, CriarObjetoAlias());
-      else
-        _controller.UpdateAlias(Ambiente, CriarObjetoAlias());
-      CarregarGridAlias();
-      MessageBox.Show("Alias salvo com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      try
+      {
+        if (lstAliases.SelectedItems.Count == 0 || selecionado == null)
+          _controller.AddAlias(Ambiente, aliasEditado);
+        else
+          _controller.UpdateAlias(Ambiente, aliasOriginal, aliasEditado);
+        CarregarGridAlias();
+        MessageBox.Show(Properties.Resources.SAtaAliasSalvoComSucesso, Properties.Resources.SAtaSucesso, MessageBoxButtons.OK, MessageBoxIcon.Information);
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(string.Format(Properties.Resources.SAtaErroSalvarAlias, ex.GetBaseException().Message), Properties.Resources.SAtaErroIniciarAmbiente, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
     }
 
     private void chkOracle_CheckedChanged(object sender, EventArgs e)

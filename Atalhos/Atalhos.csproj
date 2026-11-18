@@ -9,7 +9,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>Resources\atalho.ico</ApplicationIcon>
 		<AssemblyName>Atalhos</AssemblyName>
-		<FileVersion>2.0.1</FileVersion>
+		<FileVersion>2.0.2</FileVersion>
 		<UseWPF>true</UseWPF>
   </PropertyGroup>
 

@@ -1,4 +1,4 @@
-﻿namespace Atalhos
+namespace Atalhos
 {
     partial class AliasEditorForm
   {
@@ -706,13 +706,13 @@
       // 
       // AliasEditorForm
       // 
+      AutoScaleMode = AutoScaleMode.None;
       BackColor = Color.FromArgb(64, 64, 64);
-      ClientSize = new Size(810, 595);
+      ClientSize = new Size(819, 602);
       Controls.Add(materialCard2);
       Controls.Add(materialCard1);
-      FormBorderStyle = FormBorderStyle.FixedSingle;
+      FormBorderStyle = FormBorderStyle.Sizable;
       Icon = (Icon)resources.GetObject("$this.Icon");
-      MaximizeBox = false;
       Name = "AliasEditorForm";
       Sizable = false;
       StartPosition = FormStartPosition.CenterScreen;

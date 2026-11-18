@@ -184,4 +184,124 @@
   <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SAtaExisteNovaVersaoDisponivelNDesejaAcessar" xml:space="preserve">
+    <value>Existe nova versão disponível!{0}Deseja acessar a página de download?</value>
+  </data>
+  <data name="SAtaAtencao" xml:space="preserve">
+    <value>Atenção</value>
+  </data>
+  <data name="SAtaNenhumAmbienteEncontrado" xml:space="preserve">
+    <value>Nenhum ambiente encontrado</value>
+  </data>
+  <data name="SAtaErroIniciarAmbiente" xml:space="preserve">
+    <value>Erro ao iniciar ambiente: {0}</value>
+  </data>
+  <data name="SAtaEncerrarExeHosts" xml:space="preserve">
+    <value>Encerrar RM.exe e Hosts</value>
+  </data>
+  <data name="SAtaEncerrarExe" xml:space="preserve">
+    <value>Encerrar RM.exe</value>
+  </data>
+  <data name="SAtaEncerrarHost" xml:space="preserve">
+    <value>Encerrar Host</value>
+  </data>
+  <data name="SAtaAbrirIIS" xml:space="preserve">
+    <value>Abrir IIS</value>
+  </data>
+  <data name="SAtaAbrirJanelaPrincipal" xml:space="preserve">
+    <value>Abrir janela principal</value>
+  </data>
+  <data name="SAtaSair" xml:space="preserve">
+    <value>Sair</value>
+  </data>
+  <data name="SAtaIniciar" xml:space="preserve">
+    <value>Iniciar</value>
+  </data>
+  <data name="SAtaAtualizador" xml:space="preserve">
+    <value>RM.Atualizador</value>
+  </data>
+  <data name="SAtaBinNet" xml:space="preserve">
+    <value>Bin/RM.net</value>
+  </data>
+  <data name="SAtaAliases" xml:space="preserve">
+    <value>Aliases</value>
+  </data>
+  <data name="SAtaAliasManager" xml:space="preserve">
+    <value>RM.AliasManager</value>
+  </data>
+  <data name="SAtaFrameHTML" xml:space="preserve">
+    <value>Frame HTML</value>
+  </data>
+  <data name="SAtaCorporeNet" xml:space="preserve">
+    <value>Corpore.Net</value>
+  </data>
+  <data name="SAtaReiniciarIIS" xml:space="preserve">
+    <value>Reiniciar IIS</value>
+  </data>
+  <data name="SAtaReciclarAppPool" xml:space="preserve">
+    <value>Reciclar App Pool</value>
+  </data>
+  <data name="SAtaIniciarApagando" xml:space="preserve">
+    <value>Iniciar apagando:</value>
+  </data>
+  <data name="SAtaBroker" xml:space="preserve">
+    <value>Broker</value>
+  </data>
+  <data name="SAtaBrokerCustom" xml:space="preserve">
+    <value>Broker Custom</value>
+  </data>
+  <data name="SAtaTodosBroker" xml:space="preserve">
+    <value>Todos os Broker</value>
+  </data>
+  <data name="SAtaAtalhos" xml:space="preserve">
+    <value>Atalhos</value>
+  </data>
+  <data name="SAtaErro" xml:space="preserve">
+    <value>Erro</value>
+  </data>
+  <data name="SAtaAtalho" xml:space="preserve">
+    <value>Atalho</value>
+  </data>
+  <data name="SAtaCampoNomeAliasObrigatorio" xml:space="preserve">
+    <value>O campo 'Nome do Alias' é obrigatório.</value>
+  </data>
+  <data name="SAtaCampoServidorObrigatorio" xml:space="preserve">
+    <value>O campo 'Servidor' é obrigatório.</value>
+  </data>
+  <data name="SAtaCampoBaseDadosObrigatorio" xml:space="preserve">
+    <value>O campo 'Base de Dados' é obrigatório.</value>
+  </data>
+  <data name="SAtaCampoUsuarioBancoDadosObrigatorio" xml:space="preserve">
+    <value>O campo 'Usuário do Banco de Dados' é obrigatório.</value>
+  </data>
+  <data name="SAtaCampoSenhaBancoDadosObrigatorio" xml:space="preserve">
+    <value>O campo 'Senha do Banco de Dados' é obrigatório.</value>
+  </data>
+  <data name="SAtaSelecioneAliasParaExcluir" xml:space="preserve">
+    <value>Selecione um alias para excluir.</value>
+  </data>
+  <data name="SAtaTemCertezaQueDesejaExcluirAlias" xml:space="preserve">
+    <value>Tem certeza que deseja excluir o alias '{0}'?</value>
+  </data>
+  <data name="SAtaConfirmacao" xml:space="preserve">
+    <value>Confirmação</value>
+  </data>
+  <data name="SAtaSucesso" xml:space="preserve">
+    <value>Sucesso</value>
+  </data>
+  <data name="SAtaAliasSalvoComSucesso" xml:space="preserve">
+    <value>Alias salvo com sucesso!</value>
+  </data>
+  <data name="SAtaErroSalvarAlias" xml:space="preserve">
+    <value>Erro ao salvar alias: {0}</value>
+  </data>
+  <data name="SAtaAmbiente" xml:space="preserve">
+    <value>Ambiente: {0}</value>
+  </data>
+  <data name="SAtaConfiguracoesSalvasComSucesso" xml:space="preserve">
+    <value>Configurações salvas com sucesso!</value>
+  </data>
+  <data name="SAtaCaminhosNormalizadosComSucesso" xml:space="preserve">
+    <value>Caminhos normalizados com sucesso!</value>
+  </data>
 </root>

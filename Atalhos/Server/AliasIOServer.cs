@@ -1,4 +1,4 @@
-﻿using Atalhos.DTO;
+using Atalhos.DTO;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -22,16 +22,32 @@ namespace Atalhos.Server
 
     public AliasIOServer(string caminhoAmbiente)
     {
-      AliasPath = Path.Combine(caminhoAmbiente, "Bin", StringConstantes.AliasDat);
+      AliasPath = ResolverAliasPath(caminhoAmbiente);
+    }
+
+    private static string ResolverAliasPath(string caminho)
+    {
+      if (string.IsNullOrWhiteSpace(caminho))
+        return string.Empty;
+
+      if (Path.HasExtension(caminho) &&
+          Path.GetFileName(caminho).Equals(StringConstantes.AliasDat, StringComparison.OrdinalIgnoreCase))
+      {
+        return caminho;
+      }
+
+      return Path.Combine(caminho, StringConstantes.AliasDat);
     }
 
     public List<AliasConfigDTO> GetAliasData()
     {
       if (!File.Exists(AliasPath))
-        return null;
+        return new List<AliasConfigDTO>();
 
       List<AliasConfigDTO> listAliasConfig = new List<AliasConfigDTO>();
       var aliasData = GetRMSAliasData();
+      if (aliasData?.DbConfig == null)
+        return listAliasConfig;
 
       foreach (var alias in aliasData.DbConfig)
       {
@@ -89,6 +105,12 @@ namespace Atalhos.Server
 
     private void CriarXmlAliasDat(AliasConfigDTO alias)
     {
+      var directory = Path.GetDirectoryName(AliasPath);
+      if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
+      {
+        Directory.CreateDirectory(directory);
+      }
+
       var xml = FormataXML(alias);
       File.WriteAllText(AliasPath, xml);
     }

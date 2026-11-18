@@ -1,4 +1,4 @@
-﻿using Atalhos.DTO;
+using Atalhos.DTO;
 using Atalhos.Models;
 using Atalhos.Server;
 
@@ -24,9 +24,9 @@ namespace Atalhos
       _aliasServer.RemoveAsync(aliasModel).Wait();
     }
 
-    internal void CreateAlias(string fullName, AliasConfigDTO alias)
+    internal void CreateAlias(string path, AliasConfigDTO alias)
     {
-      var server = new AliasIOServer(fullName);
+      var server = new AliasIOServer(path);
       server.CreateAliasDat(alias);
     }
 
@@ -53,14 +53,16 @@ namespace Atalhos
       _aliasServer.AddAsync(aliasModel).Wait();
     }
 
-    internal void UpdateAlias(AmbienteDTO ambiente, AliasConfigDTO alias)
+    internal void UpdateAlias(AmbienteDTO ambiente, AliasConfigDTO aliasOriginal, AliasConfigDTO aliasEditado)
     {
-      var aliasModel = AliasConfigDTO.ToModel(alias);
-      var aliasExistente = _aliasServer.GetByAmbienteName(ambiente.Nome, alias.Servidor, alias.Base);
-      if (aliasExistente == null)
-      {
-        return;
-      }
+      if (aliasOriginal == null) return;
+      var ambienteModel = _ambienteServer.GetByNameAsync(ambiente.Nome).Result;
+      if (ambienteModel == null) return;
+
+      var aliasExistente = _aliasServer.GetByIdAsync(aliasOriginal.Id).Result;
+      if (aliasExistente == null) return;
+
+      var aliasModel = AliasConfigDTO.ToModel(aliasEditado);
       aliasModel.Id = aliasExistente.Id;
       aliasModel.AmbienteId = aliasExistente.AmbienteId;
       _aliasServer.UpdateAsync(aliasModel).Wait();
@@ -76,11 +78,15 @@ namespace Atalhos
 
     internal void ReadExistentAlias(AmbienteDTO ambiente)
     {
-      var server = new AliasIOServer(ambiente.FullName);
-      var aliases = server.GetAliasData().Where(x => x.NomeAlias != "CorporeRM").ToList();
+      if (ambiente == null || string.IsNullOrWhiteSpace(ambiente.FullName))
+        return;
+
+      var server = new AliasIOServer(ambiente.Bin);
+      var aliases = (server.GetAliasData() ?? new List<AliasConfigDTO>())
+        .Where(x => x != null && x.NomeAlias != "CorporeRM")
+        .ToList();
       foreach (var alias in aliases) 
       { 
-        var aliasModel = AliasConfigDTO.ToModel(alias);
         AddAlias(ambiente, alias);
       }
     }
