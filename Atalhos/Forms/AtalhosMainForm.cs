@@ -6,6 +6,7 @@ using Microsoft.Win32;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace Atalhos
 {
@@ -23,6 +24,7 @@ namespace Atalhos
     private AliasConfigDTO _aliasAtual { get; set; }
     private bool _onTray;
     private bool _onShow = true;
+    private bool _estahInitializando = false;
     #endregion
 
     public AtalhosMainForm()
@@ -86,7 +88,7 @@ namespace Atalhos
       VersionController versionController = new VersionController();
       if (!versionController.IsLastVersion())
       {
-        var result = MessageBox.Show("Existe nova versão disponível!\r\nDeseja acessar a página de download?", "Atalho", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+        var result = MessageBox.Show(string.Format(Properties.Resources.SAtaExisteNovaVersaoDisponivelNDesejaAcessar, "\r\n"), Properties.Resources.SAtaAtalho, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
         if (result == DialogResult.Yes)
           Process.Start("https://github.com/viniciusfs15/Atalhos/releases");
       }
@@ -140,7 +142,7 @@ namespace Atalhos
       _listaAmbiente.AddRange(_ambienteController.LerAmbientes(_listaAtalhos));
       if (_listaAmbiente.Count == 0)
       {
-        MessageBox.Show("Nenhum ambiente encontrado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        MessageBox.Show(Properties.Resources.SAtaNenhumAmbienteEncontrado, Properties.Resources.SAtaAtencao, MessageBoxButtons.OK, MessageBoxIcon.Warning);
       }
     }
 
@@ -150,6 +152,36 @@ namespace Atalhos
       chkFavorito.Checked = _ambienteAtual.Favorito;
       chkAutoLogin.Checked = _ambienteAtual.AutoLogin;
       chkControlaIis.Checked = _ambienteAtual.ControlaIIS;
+      AplicarRestricoesPorTipo();
+    }
+
+    private void AplicarRestricoesPorTipo()
+    {
+      var ehSmartClient = _ambienteAtual != null && _ambienteAtual.EhSmartClient;
+
+      btnConfigAmbiente.Enabled = !ehSmartClient;
+      btnAddAlias.Enabled = !ehSmartClient;
+      btnAliasManager.Enabled = !ehSmartClient;
+      chkDelBroker.Enabled = !ehSmartClient;
+      chkDelBrokerCustom.Enabled = !ehSmartClient;
+      materialButton7.Enabled = !ehSmartClient;
+      chkControlaIis.Enabled = !ehSmartClient;
+      btnAbrirIIS.Enabled = !ehSmartClient;
+      btnResetIIs.Enabled = !ehSmartClient;
+      btnReciclarPool.Enabled = !ehSmartClient;
+      btnFrameHtml.Enabled = !ehSmartClient;
+      btnCorporeNet.Enabled = !ehSmartClient;
+      btnAtualizador.Enabled = !ehSmartClient;
+      btnLimparDllCustom.Enabled = !ehSmartClient;
+      cmbAlias.Enabled = !ehSmartClient;
+      btnAbrirPastaCustom.Enabled = !ehSmartClient;
+
+      if (ehSmartClient)
+      {
+        chkDelBroker.Checked = false;
+        chkDelBrokerCustom.Checked = false;
+        chkControlaIis.Checked = false;
+      }
     }
 
     public void SetAmbienteAtual()
@@ -198,7 +230,7 @@ namespace Atalhos
     {
       SetAmbienteAndAliasAtual();
       var atalho = _listaAtalhos.Find(x => x.Nome.ToUpper() == nomeApp.ToUpper());
-      if (atalho == null)
+      if (atalho == null || !File.Exists(atalho.Caminho))
         return;
 
       if (privilegios)
@@ -230,27 +262,54 @@ namespace Atalhos
     private void IniciarAmbiente(object sender, EventArgs e)
     {
       SetAmbienteAndAliasAtual();
-      _aliasController.CreateAlias(_ambienteAtual.FullName, _aliasAtual);
-      if (_ambienteAtual == null || _ambienteAtual.Arquivos.Count <= 0)
+
+      if (_ambienteAtual == null )
         return;
+
+      if (_ambienteAtual.EhSmartClient)
+      {
+        _ambienteController.IniciarAmbiente(_ambienteAtual, chkAutoLogin.Checked, chkDelBrokerCustom.Checked, chkDelBroker.Checked);
+        return;
+      }
+
+      if( _ambienteAtual.Arquivos.Count <= 0)
+          return;
+
+      _aliasController.CreateAlias(_ambienteAtual.Bin, _aliasAtual);
       _ambienteController.IniciarAmbiente(_ambienteAtual, chkAutoLogin.Checked, chkDelBrokerCustom.Checked, chkDelBroker.Checked);
       chkDelBroker.Checked = false;
       chkDelBrokerCustom.Checked = false;
+    }
+
+    private async Task IniciarAmbienteAsync(object sender, EventArgs e)
+    {
+      SetAmbienteAndAliasAtual();
+      if (_ambienteAtual == null || _ambienteAtual.Arquivos.Count <= 0)
+        return;
+
+      if (!_ambienteAtual.EhSmartClient)
+      {
+        _aliasController.CreateAlias(_ambienteAtual.Bin, _aliasAtual);
+      }
+
+      await _ambienteController.IniciarAmbienteAsync(_ambienteAtual, chkAutoLogin.Checked, chkDelBrokerCustom.Checked, chkDelBroker.Checked);
+      chkDelBroker.Checked = false;
+      chkDelBrokerCustom.Checked = false;
+    }
+
+    private void IniciarAmbienteAliasEspecifico(object sender, EventArgs e, AliasConfigDTO alias)
+    {
+      cmbAlias.SelectedItem = alias.NomeAlias;
+      IniciarAmbiente(sender, e);
     }
 
     private void UpdateAmbienteAtual()
     {
       if (_ambienteAtual == null) return;
 
-      try
-      {
-        _ambienteAtual.Favorito = chkFavorito.Checked;
-        _ambienteAtual.ControlaIIS = chkControlaIis.Checked;
-        _ambienteAtual.AutoLogin = chkAutoLogin.Checked;
-      }
-      catch
-      {
-      }
+      _ambienteAtual.Favorito = chkFavorito.Checked;
+      _ambienteAtual.ControlaIIS = chkControlaIis.Checked;
+      _ambienteAtual.AutoLogin = chkAutoLogin.Checked;
 
       _ambienteController.SaveAmbiente(_ambienteAtual);
     }
@@ -302,16 +361,39 @@ namespace Atalhos
       chkDelBroker.Checked = false;
     }
 
-    private void btnRmExe_Click(object sender, EventArgs e)
+    private async void btnRmExe_Click(object sender, EventArgs e)
     {
-      IniciarAmbiente(sender, e);
-      MouseFeedBack();
+      // ProteÃ§Ã£o contra mÃºltiplos cliques
+      if (_estahInitializando)
+        return;
+
+      _estahInitializando = true;
+      btnRmExe.Enabled = false;
+      Cursor.Current = Cursors.WaitCursor;
+
+      try
+      {
+        await IniciarAmbienteAsync(sender, e);
+      }
+      catch (Exception ex)
+      {
+        MessageBox.Show(string.Format(Properties.Resources.SAtaErroIniciarAmbiente, ex.Message), Properties.Resources.SAtaErro, MessageBoxButtons.OK, MessageBoxIcon.Error);
+      }
+      finally
+      {
+        btnRmExe.Enabled = true;
+        Cursor.Current = Cursors.Default;
+        _estahInitializando = false;
+      }
     }
 
     private void btnHost_Click(object sender, EventArgs e)
     {
+      if (_ambienteAtual != null && _ambienteAtual.EhSmartClient)
+        return;
+
       AtualizarLog();
-      _aliasController.CreateAlias(_ambienteAtual.FullName, _aliasAtual);
+      _aliasController.CreateAlias(_ambienteAtual.Bin, _aliasAtual);
       DelBroker();
       IniciarAppsRM(StringConstantes.RM_Host_Exe, true);
       MouseFeedBack();
@@ -349,6 +431,9 @@ namespace Atalhos
 
     private void btnAbrirIIS_Click(object sender, EventArgs e)
     {
+      if (_ambienteAtual != null && _ambienteAtual.EhSmartClient)
+        return;
+
       _ambienteController.IniciarExplorer("C:\\Windows\\System32\\inetsrv\\InetMgr.exe");
       MouseFeedBack();
     }
@@ -383,6 +468,9 @@ namespace Atalhos
 
     private void btnAddAlias_Click(object sender, EventArgs e)
     {
+      if (_ambienteAtual != null && _ambienteAtual.EhSmartClient)
+        return;
+
       AliasEditorForm aliasEditorForm = new AliasEditorForm();
       SetAmbienteAndAliasAtual();
       aliasEditorForm.Ambiente = _ambienteAtual;
@@ -394,6 +482,9 @@ namespace Atalhos
 
     private void btnConfigAmbiente_Click(object sender, EventArgs e)
     {
+      if (_ambienteAtual != null && _ambienteAtual.EhSmartClient)
+        return;
+
       AmbienteEditorForm ambienteEditorForm = new AmbienteEditorForm();
       SetAmbienteAndAliasAtual();
       ambienteEditorForm._ambiente = _ambienteController.GetAmbiente(_ambienteAtual.Nome);
@@ -404,12 +495,18 @@ namespace Atalhos
 
     private void btnReset_Click(object sender, EventArgs e)
     {
+      if (_ambienteAtual != null && _ambienteAtual.EhSmartClient)
+        return;
+
       _ambienteController.ResetarIIS(_ambienteAtual, chkControlaIis.Checked);
       MouseFeedBack();
     }
 
     private void btnReciclarAppPool_Click(object sender, EventArgs e)
     {
+      if (_ambienteAtual != null && _ambienteAtual.EhSmartClient)
+        return;
+
       _ambienteController.ReciclarAppPool();
       MouseFeedBack();
     }
@@ -449,7 +546,7 @@ namespace Atalhos
       {
         notifyIcon.Icon = new Icon(ms);
       }
-      notifyIcon.Text = "Atalhos";
+      notifyIcon.Text = Properties.Resources.SAtaAtalhos;
       notifyIcon.Visible = true;
       notifyIcon.MouseClick += NotifyIcon_MouseClick;
       AtualizarMenuAmbientes();
@@ -509,30 +606,48 @@ namespace Atalhos
       contextMenuStripTray.Items.AddRange(new ToolStripItem[]
       {
             new ToolStripSeparator(),
-            CriarMenuItem("Encerrar RM.exe e Hosts", Resources.Host_Down, (s, e) => btnEncerrarAmbiente_Click(s, e)),
+            CriarMenuItem(Properties.Resources.SAtaEncerrarExeHosts, Resources.Host_Down, (s, e) => btnEncerrarAmbiente_Click(s, e)),
             new ToolStripSeparator(),
-            CriarMenuItem("Encerrar RM.exe", Resources.Host_Down, (s, e) => EncerrarApp("RM")),
-            CriarMenuItem("Encerrar Host", Resources.Host_Down, (s, e) => EncerrarApp("RM.Host")),
+            CriarMenuItem(Properties.Resources.SAtaEncerrarExe, Resources.Host_Down, (s, e) => EncerrarApp("RM")),
+            CriarMenuItem(Properties.Resources.SAtaEncerrarHost, Resources.Host_Down, (s, e) => EncerrarApp("RM.Host")),
             new ToolStripSeparator(),
-            CriarMenuItem("Abrir IIS", Resources.IIS, (s, e) => btnAbrirIIS_Click(s,e)),
+        CriarMenuItem(Properties.Resources.SAtaAbrirIIS, Resources.IIS, (s, e) => { if (_ambienteAtual != null && _ambienteAtual.EhSmartClient) return; btnAbrirIIS_Click(s,e); }),
             new ToolStripSeparator(),
-            CriarMenuItem("Abrir janela principal", Resources.AtalhoIcone, (s, e) => MostrarJanela()),
-            CriarMenuItem("Sair", Resources.Close, (s, e) => EncerrarAplicacao())
+            CriarMenuItem(Properties.Resources.SAtaAbrirJanelaPrincipal, Resources.AtalhoIcone, (s, e) => MostrarJanela()),
+            CriarMenuItem(Properties.Resources.SAtaSair, Resources.Close, (s, e) => EncerrarAplicacao())
       });
     }
 
     private ToolStripMenuItem CriarItemAmbiente(AmbienteDTO ambiente)
     {
+      var ehSmartClient = ambiente != null && ambiente.EhSmartClient;
       var itemAmbiente = new ToolStripMenuItem
       {
         Text = $"{ambiente.Unidade}{ambiente.Nome}",
         Tag = ambiente,
         Image = Resources.Settings
       };
-      itemAmbiente.Click += (s, e) => ExecTrayButon(s, e, ambiente, () => btnConfigAmbiente_Click(s, e));
+      
+      if (ehSmartClient)
+        AdicionarItensAmbienteSmartClient(itemAmbiente, ambiente);
+      else
+        AdicionarItensAmbientePadrao(itemAmbiente, ambiente);
 
-      // Adiciona seção de Aliases
-      itemAmbiente.DropDown.Items.Add(new ToolStripLabel() { Text = "Aliases", Font = _labelFont, ForeColor = SystemColors.GrayText });
+      return itemAmbiente;
+    }
+
+    private void AdicionarItensAmbienteSmartClient(ToolStripMenuItem itemAmbiente, AmbienteDTO ambiente)
+    {
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaIniciar, Properties.Resources.Host, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e))));
+      itemAmbiente.DropDown.Items.Add(new ToolStripSeparator());
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaAtualizador, Resources.Atualizador, (s, e) => ExecTrayButon(s, e, ambiente, () => btnAtualizador_Click(s, e))));
+      itemAmbiente.DropDown.Items.Add(new ToolStripSeparator());
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaBinNet, Resources.Pasta, (s, e) => ExecTrayButon(s, e, ambiente, () => btnBin_Click(s, e))));
+    }
+
+    private void AdicionarItensAmbientePadrao(ToolStripMenuItem itemAmbiente, AmbienteDTO ambiente)
+    {
+      itemAmbiente.DropDown.Items.Add(new ToolStripLabel() { Text = Properties.Resources.SAtaAliases, Font = _labelFont, ForeColor = SystemColors.GrayText });
 
       var aliases = _aliasController.GetAliasByAmbienteName(ambiente.Nome);
       foreach (var alias in aliases)
@@ -540,45 +655,48 @@ namespace Atalhos
         itemAmbiente.DropDown.Items.Add(CriarItemAlias(ambiente, alias));
       }
 
-      // Adiciona ações do ambiente (IIS, Pasta, etc)
-      itemAmbiente.DropDown.Items.AddRange(new ToolStripItem[]
-      {
-            new ToolStripSeparator(),
-            CriarMenuItem("RM.Atualizador", Resources.Atualizador, (s, e) => ExecTrayButon(s, e, ambiente, () => btnAtualizador_Click(s, e))),
-            CriarMenuItem("RM.AliasManager", Resources.ArquivoConfig, (s, e) => ExecTrayButon(s, e, ambiente, () => btnAlias_Click(s, e))),
-            new ToolStripSeparator(),
-            CriarMenuItem("Bin/RM.net", Resources.Pasta, (s, e) => ExecTrayButon(s, e, ambiente, () => btnBin_Click(s, e))),
-            CriarMenuItem("Frame HTML", Resources.Pasta, (s, e) => ExecTrayButon(s, e, ambiente, () => btnFrameHtml_Click(s, e))),
-            CriarMenuItem("Corpore.Net", Resources.Pasta, (s, e) => ExecTrayButon(s, e, ambiente, () => btnCorporeNet_Click(s, e))),
-            new ToolStripSeparator(),
-            CriarMenuItem("Reiniciar IIS", Properties.Resources.IIS, (s, e) => ExecTrayButon(s, e, ambiente, () => btnReset_Click(s, e))),
-            CriarMenuItem("Reciclar App Pool", Properties.Resources.IisAppPool, (s, e) => ExecTrayButon(s, e, ambiente, () => btnReciclarAppPool_Click(s, e)))
-      });
+      itemAmbiente.Click += (s, e) => ExecTrayButon(s, e, ambiente, () => btnConfigAmbiente_Click(s, e));
 
+      itemAmbiente.DropDown.Items.Add(new ToolStripSeparator());
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaAtualizador, Resources.Atualizador, (s, e) => ExecTrayButon(s, e, ambiente, () => btnAtualizador_Click(s, e))));
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaAliasManager, Resources.ArquivoConfig, (s, e) => ExecTrayButon(s, e, ambiente, () => btnAlias_Click(s, e))));
 
-      return itemAmbiente;
+      itemAmbiente.DropDown.Items.Add(new ToolStripSeparator());
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaBinNet, Resources.Pasta, (s, e) => ExecTrayButon(s, e, ambiente, () => btnBin_Click(s, e))));
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaFrameHTML, Resources.Pasta, (s, e) => ExecTrayButon(s, e, ambiente, () => btnFrameHtml_Click(s, e))));
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaCorporeNet, Resources.Pasta, (s, e) => ExecTrayButon(s, e, ambiente, () => btnCorporeNet_Click(s, e))));
+      itemAmbiente.DropDown.Items.Add(new ToolStripSeparator());
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaReiniciarIIS, Properties.Resources.IIS, (s, e) => ExecTrayButon(s, e, ambiente, () => btnReset_Click(s, e))));
+      itemAmbiente.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaReciclarAppPool, Properties.Resources.IisAppPool, (s, e) => ExecTrayButon(s, e, ambiente, () => btnReciclarAppPool_Click(s, e))));
     }
 
     private ToolStripMenuItem CriarItemAlias(AmbienteDTO ambiente, AliasConfigDTO alias)
     {
+      var ehSmartClient = ambiente != null && ambiente.EhSmartClient;
       var itemAlias = new ToolStripMenuItem
       {
         Text = alias.NomeAlias,
         Tag = (ambiente, alias),
         Image = Resources.DataBase
       };
-      itemAlias.Click += (s, e) => ExecTrayButon(s, e, ambiente, alias.NomeAlias, () => btnAddAlias_Click(s, e));
-
-      itemAlias.DropDown.Items.Add(CriarMenuItem("Iniciar", Properties.Resources.Host, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e))));
-      itemAlias.DropDown.Items.Add(new ToolStripSeparator());
-      itemAlias.DropDown.Items.Add(new ToolStripLabel() { Text = "Iniciar apagando:", Font = _labelFont, ForeColor = SystemColors.GrayText });
-
-      itemAlias.DropDown.Items.AddRange(new ToolStripItem[]
+      if (!ehSmartClient)
       {
-            CriarMenuItem("Broker", Properties.Resources.HostClean, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e), 1)),
-            CriarMenuItem("Broker Custom", Properties.Resources.HostClean, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e), 2)),
-            CriarMenuItem("Todos os Broker", Properties.Resources.HostClean, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e), 3))
-      });
+        itemAlias.Click += (s, e) => ExecTrayButon(s, e, ambiente, alias.NomeAlias, () => btnAddAlias_Click(s, e));
+      }
+
+      itemAlias.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaErroIniciarAmbiente, Properties.Resources.Host, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbienteAliasEspecifico(s, e, alias))));
+      if (!ehSmartClient)
+      {
+        itemAlias.DropDown.Items.Add(new ToolStripSeparator());
+        itemAlias.DropDown.Items.Add(new ToolStripLabel() { Text = Properties.Resources.SAtaIniciarApagando, Font = _labelFont, ForeColor = SystemColors.GrayText });
+
+        itemAlias.DropDown.Items.AddRange(new ToolStripItem[]
+        {
+              CriarMenuItem(Properties.Resources.SAtaBroker, Properties.Resources.HostClean, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e), 1)),
+              CriarMenuItem(Properties.Resources.SAtaBrokerCustom, Properties.Resources.HostClean, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e), 2)),
+              CriarMenuItem(Properties.Resources.SAtaTodosBroker, Properties.Resources.HostClean, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbiente(s, e), 3))
+        });
+      }
 
       return itemAlias;
     }
@@ -610,7 +728,7 @@ namespace Atalhos
       else if (e.Button == MouseButtons.Right)
       {
         SetForegroundWindow(this.Handle);
-        contextMenuStripTray.Show(Cursor.Position);
+        contextMenuStripTray.Show(Cursor.Position.X - 100, Cursor.Position.Y);
       }
     }
 

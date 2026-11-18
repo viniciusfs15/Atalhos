@@ -1,4 +1,4 @@
-﻿/Atalhos-Core/obj/Debug/net8.0-windows/apphost.exe
+/Atalhos-Core/obj/Debug/net8.0-windows/apphost.exe
 .vs/
 Atalhos-Core/bin/
 Atalhos-Core/obj/
@@ -13,3 +13,4 @@ Atalhos-Core/obj/
 /Atalhos/.vscode
 /Atalhos/bin/Release/net8.0-windows/runtimes
 /Atalhos/bin/Release/net8.0-windows
+/Atalhos/.github/

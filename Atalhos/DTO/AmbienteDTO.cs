@@ -1,4 +1,4 @@
-﻿using Atalhos.Models;
+using Atalhos.Models;
 using System.IO;
 
 namespace Atalhos.DTO
@@ -8,7 +8,10 @@ namespace Atalhos.DTO
     public Guid Id { get; set; }
     public string Nome { get; internal set; }
     public string FullName { get; internal set; } = string.Empty;
-    public string Bin => Path.Combine(FullName, StringConstantes.Bin);
+    public string TipoAmbiente { get; set; } = StringConstantes.TipoPadrao;
+    public bool EhSmartClient => TipoAmbiente == StringConstantes.TipoSmartClient;
+    public bool EhInstalado => TipoAmbiente == StringConstantes.TipoInstalado;
+    public string Bin => GetPastaBinarios();
     public string Custom => Path.Combine(Bin, StringConstantes.Custom);
     public string FrameHTML => Path.Combine(FullName, StringConstantes.FrameHTML);
     public string CorporeNet => Path.Combine(FullName, StringConstantes.CorporeNet);
@@ -18,6 +21,15 @@ namespace Atalhos.DTO
     public bool AutoLogin { get; internal set; }
 
     public List<AtalhoDTO> Arquivos = new List<AtalhoDTO>();
+
+    private string GetPastaBinarios()
+    {
+      if (EhSmartClient)
+        return FullName;
+      if (EhInstalado)
+        return Path.Combine(FullName, StringConstantes.RM_Net);
+      return Path.Combine(FullName, StringConstantes.Bin);
+    }
 
     public static AmbienteModel ToModel(AmbienteDTO dto)
     {

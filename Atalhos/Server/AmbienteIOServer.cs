@@ -1,4 +1,4 @@
-﻿using Atalhos.DTO;
+using Atalhos.DTO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -30,6 +30,7 @@ namespace Atalhos.Server
           ambiente.Nome = pastaAmbiente.Name;
           ambiente.FullName = pastaAmbiente.FullName;
           ambiente.Unidade = pastaAmbiente.Root.Name;
+          ambiente.TipoAmbiente = StringConstantes.TipoPadrao;
           ambientes.Add(ambiente);
         }
         return ambientes;
@@ -83,8 +84,71 @@ namespace Atalhos.Server
         listaAmbientes.AddRange(LerDiretorios($"{unidade}RM\\Atual", listaAtalhos));
         listaAmbientes.AddRange(LerDiretorios($"{unidade}Linha-RM\\Legado", listaAtalhos));
         listaAmbientes.AddRange(LerDiretorios($"{unidade}Linha-RM\\Atual", listaAtalhos));
+        listaAmbientes.AddRange(LerDiretoriosTotvs(unidade));
       }
       return listaAmbientes;
+    }
+
+    private List<AmbienteDTO> LerDiretoriosTotvs(string unidade)
+    {
+      var ambientes = new List<AmbienteDTO>();
+      var diretorioTotvs = new DirectoryInfo($"{unidade}TOTVS");
+      if (!diretorioTotvs.Exists)
+        return ambientes;
+
+      foreach (var pasta in diretorioTotvs.EnumerateDirectories())
+      {
+        if (pasta.Name.Equals("CorporeRM", StringComparison.OrdinalIgnoreCase))
+        {
+          ambientes.AddRange(LerDiretoriosInstalados(pasta));
+          continue;
+        }
+
+        if (EhSmartClient(pasta.FullName))
+        {
+          ambientes.Add(new AmbienteDTO
+          {
+            Nome = pasta.Name,
+            FullName = pasta.FullName,
+            Unidade = pasta.Root.Name,
+            TipoAmbiente = StringConstantes.TipoSmartClient
+          });
+        }
+      }
+
+      return ambientes;
+    }
+
+    private List<AmbienteDTO> LerDiretoriosInstalados(DirectoryInfo diretorioCorporeRm)
+    {
+      var ambientes = new List<AmbienteDTO>();
+      foreach (var pastaAmbiente in diretorioCorporeRm.EnumerateDirectories())
+      {
+        var rmExe = Path.Combine(pastaAmbiente.FullName, StringConstantes.RM_Exe);
+        var hostExe = Path.Combine(pastaAmbiente.FullName, StringConstantes.RM_Host_Exe);
+
+        if (!Directory.Exists(pastaAmbiente.FullName) || !File.Exists(rmExe) || !File.Exists(hostExe))
+          continue;
+
+        ambientes.Add(new AmbienteDTO
+        {
+          Nome = diretorioCorporeRm.Name,
+          FullName = diretorioCorporeRm.FullName,
+          Unidade = pastaAmbiente.Root.Name,
+          TipoAmbiente = StringConstantes.TipoInstalado
+        });
+      }
+
+      return ambientes;
+    }
+
+    private bool EhSmartClient(string caminhoAmbiente)
+    {
+      var rmExe = Path.Combine(caminhoAmbiente, StringConstantes.RM_Exe);
+      var aliasManager = Path.Combine(caminhoAmbiente, StringConstantes.RM_AliasManager);
+      var hostExe = Path.Combine(caminhoAmbiente, StringConstantes.RM_Host_Exe);
+
+      return File.Exists(rmExe) && File.Exists(aliasManager) && !File.Exists(hostExe);
     }
 	}
 }

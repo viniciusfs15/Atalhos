@@ -1,16 +1,6 @@
-﻿using Atalhos.Controller;
+using Atalhos.Controller;
 using Atalhos.DTO;
-using MaterialSkin3;
 using MaterialSkin3.Controls;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Atalhos
 {
@@ -40,7 +30,7 @@ namespace Atalhos
 
     private void AmbienteEditorForm_Load(object sender, EventArgs e)
     {
-      this.Text = $"Ambiente: {_ambiente?.Nome}";
+      this.Text = string.Format(Properties.Resources.SAtaAmbiente, _ambiente?.Nome);
 
       GetConfigs();
       DefineSize();
@@ -88,14 +78,14 @@ namespace Atalhos
     private void btnSalvar_Click(object sender, EventArgs e)
     {
       Save();
-      MessageBox.Show("Configurações salvas com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      MessageBox.Show(Properties.Resources.SAtaConfiguracoesSalvasComSucesso, Properties.Resources.SAtaSucesso, MessageBoxButtons.OK, MessageBoxIcon.Information);
       MouseFeedBack();
     }
 
     private void btnNormalizePath_Click(object sender, EventArgs e)
     {
       _ambienteConfigController.NormalizeAmbientePath(GetAmbienteConfigDTO());
-      MessageBox.Show("Caminhos normalizados com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+      MessageBox.Show(Properties.Resources.SAtaCaminhosNormalizadosComSucesso, Properties.Resources.SAtaSucesso, MessageBoxButtons.OK, MessageBoxIcon.Information);
       GetConfigs();
     }
   }

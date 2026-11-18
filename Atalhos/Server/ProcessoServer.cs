@@ -1,7 +1,9 @@
-﻿using Atalhos.DTO;
+using Atalhos.DTO;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Atalhos.Server
 {
@@ -27,10 +29,14 @@ namespace Atalhos.Server
 
     public void IniciarExplorer(string caminhoExe)
     {
+      if (!Directory.Exists(caminhoExe))
+      {
+        Process.Start("explorer.exe", Directory.GetParent(caminhoExe).FullName);
+        return;
+      }
       Process.Start("explorer.exe", caminhoExe);
     }
 
-    //inicia processo como administrador
     public void IniciarComoAdministrador(string caminhoExe)
     {
       ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -48,7 +54,6 @@ namespace Atalhos.Server
       }
     }
 
-    //inicia processo como administrador com argumentos
     public void IniciarComoAdministrador(string caminhoExe, string argumentos)
     {
       ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -84,6 +89,32 @@ namespace Atalhos.Server
             break;
           }
           Thread.Sleep(1000);
+        }
+      }        
+
+      if (exeComArgumentos)
+        IniciarComoAdministrador(rmExe.Caminho, rmExe.Argumentos);
+      else
+        IniciarComoAdministrador(rmExe.Caminho);
+    }
+
+    public async Task IniciarExeEHostAsync(AtalhoDTO rmExe, AtalhoDTO host, bool exeComArgumentos)
+    {
+      var hostCheck = new RMHostCheck(rmExe.Caminho);
+      var check = await hostCheck.CheckHostActivityAsync();
+      
+      if (!check)
+      {
+        IniciarComoAdministrador(host.Caminho);
+
+        var timeout = 15;
+        for (int i = 0; i < timeout; i++)
+        {
+          if (await hostCheck.CheckHostActivityAsync())
+          {
+            break;
+          }
+          await Task.Delay(1000);
         }
       }        
 

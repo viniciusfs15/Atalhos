@@ -1,4 +1,4 @@
-﻿using Atalhos.Models;
+using Atalhos.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -78,6 +78,8 @@ namespace Atalhos.DTO
 
     public static AliasModel ToModel(AliasConfigDTO dto)
     {
+      if(dto == null)
+        return null;
       return new AliasModel
       {
         Id = dto.Id,

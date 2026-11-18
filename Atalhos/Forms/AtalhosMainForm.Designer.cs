@@ -1,4 +1,4 @@
-﻿namespace Atalhos
+namespace Atalhos
 {
     partial class AtalhosMainForm
     {
@@ -34,8 +34,8 @@
       flowLayoutPanel1 = new FlowLayoutPanel();
       btnAtualizador = new MaterialSkin3.Controls.MaterialButton();
       btnAliasManager = new MaterialSkin3.Controls.MaterialButton();
-      materialButton4 = new MaterialSkin3.Controls.MaterialButton();
-      materialButton3 = new MaterialSkin3.Controls.MaterialButton();
+      btnAbrirPastaBin = new MaterialSkin3.Controls.MaterialButton();
+      btnAbrirPastaCustom = new MaterialSkin3.Controls.MaterialButton();
       btnLimparDllCustom = new MaterialSkin3.Controls.MaterialButton();
       cmbAmbiente = new MaterialSkin3.Controls.MaterialComboBox();
       materialLabel1 = new MaterialSkin3.Controls.MaterialLabel();
@@ -82,10 +82,10 @@
       materialCard1.Depth = 0;
       materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard1.Location = new Point(10, 113);
-      materialCard1.Margin = new Padding(5, 5, 5, 5);
+      materialCard1.Margin = new Padding(5);
       materialCard1.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard1.Name = "materialCard1";
-      materialCard1.Padding = new Padding(14, 14, 14, 14);
+      materialCard1.Padding = new Padding(14);
       materialCard1.Size = new Size(243, 288);
       materialCard1.TabIndex = 13;
       // 
@@ -107,8 +107,8 @@
       // 
       flowLayoutPanel1.Controls.Add(btnAtualizador);
       flowLayoutPanel1.Controls.Add(btnAliasManager);
-      flowLayoutPanel1.Controls.Add(materialButton4);
-      flowLayoutPanel1.Controls.Add(materialButton3);
+      flowLayoutPanel1.Controls.Add(btnAbrirPastaBin);
+      flowLayoutPanel1.Controls.Add(btnAbrirPastaCustom);
       flowLayoutPanel1.Controls.Add(btnLimparDllCustom);
       flowLayoutPanel1.Location = new Point(0, 36);
       flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -158,47 +158,47 @@
       btnAliasManager.UseVisualStyleBackColor = true;
       btnAliasManager.Click += btnAlias_Click;
       // 
-      // materialButton4
+      // btnAbrirPastaBin
       // 
-      materialButton4.AutoSize = false;
-      materialButton4.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-      materialButton4.Density = MaterialSkin3.Controls.MaterialButton.MaterialButtonDensity.Default;
-      materialButton4.Depth = 0;
-      materialButton4.HighEmphasis = false;
-      materialButton4.Icon = Properties.Resources.Pasta;
-      materialButton4.Location = new Point(4, 102);
-      materialButton4.Margin = new Padding(4, 6, 4, 6);
-      materialButton4.MouseState = MaterialSkin3.MouseState.HOVER;
-      materialButton4.Name = "materialButton4";
-      materialButton4.NoAccentTextColor = Color.Empty;
-      materialButton4.Size = new Size(233, 36);
-      materialButton4.TabIndex = 7;
-      materialButton4.Text = "Abrir Pasta Bin";
-      materialButton4.Type = MaterialSkin3.Controls.MaterialButton.MaterialButtonType.Contained;
-      materialButton4.UseAccentColor = false;
-      materialButton4.UseVisualStyleBackColor = true;
-      materialButton4.Click += btnBin_Click;
+      btnAbrirPastaBin.AutoSize = false;
+      btnAbrirPastaBin.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+      btnAbrirPastaBin.Density = MaterialSkin3.Controls.MaterialButton.MaterialButtonDensity.Default;
+      btnAbrirPastaBin.Depth = 0;
+      btnAbrirPastaBin.HighEmphasis = false;
+      btnAbrirPastaBin.Icon = Properties.Resources.Pasta;
+      btnAbrirPastaBin.Location = new Point(4, 102);
+      btnAbrirPastaBin.Margin = new Padding(4, 6, 4, 6);
+      btnAbrirPastaBin.MouseState = MaterialSkin3.MouseState.HOVER;
+      btnAbrirPastaBin.Name = "btnAbrirPastaBin";
+      btnAbrirPastaBin.NoAccentTextColor = Color.Empty;
+      btnAbrirPastaBin.Size = new Size(233, 36);
+      btnAbrirPastaBin.TabIndex = 7;
+      btnAbrirPastaBin.Text = "Abrir Pasta Bin";
+      btnAbrirPastaBin.Type = MaterialSkin3.Controls.MaterialButton.MaterialButtonType.Contained;
+      btnAbrirPastaBin.UseAccentColor = false;
+      btnAbrirPastaBin.UseVisualStyleBackColor = true;
+      btnAbrirPastaBin.Click += btnBin_Click;
       // 
-      // materialButton3
+      // btnAbrirPastaCustom
       // 
-      materialButton3.AutoSize = false;
-      materialButton3.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-      materialButton3.Density = MaterialSkin3.Controls.MaterialButton.MaterialButtonDensity.Default;
-      materialButton3.Depth = 0;
-      materialButton3.HighEmphasis = false;
-      materialButton3.Icon = Properties.Resources.Pasta;
-      materialButton3.Location = new Point(4, 150);
-      materialButton3.Margin = new Padding(4, 6, 4, 6);
-      materialButton3.MouseState = MaterialSkin3.MouseState.HOVER;
-      materialButton3.Name = "materialButton3";
-      materialButton3.NoAccentTextColor = Color.Empty;
-      materialButton3.Size = new Size(233, 36);
-      materialButton3.TabIndex = 8;
-      materialButton3.Text = "Abrir Pasta Custom";
-      materialButton3.Type = MaterialSkin3.Controls.MaterialButton.MaterialButtonType.Contained;
-      materialButton3.UseAccentColor = false;
-      materialButton3.UseVisualStyleBackColor = true;
-      materialButton3.Click += btnCustom_Click;
+      btnAbrirPastaCustom.AutoSize = false;
+      btnAbrirPastaCustom.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+      btnAbrirPastaCustom.Density = MaterialSkin3.Controls.MaterialButton.MaterialButtonDensity.Default;
+      btnAbrirPastaCustom.Depth = 0;
+      btnAbrirPastaCustom.HighEmphasis = false;
+      btnAbrirPastaCustom.Icon = Properties.Resources.Pasta;
+      btnAbrirPastaCustom.Location = new Point(4, 150);
+      btnAbrirPastaCustom.Margin = new Padding(4, 6, 4, 6);
+      btnAbrirPastaCustom.MouseState = MaterialSkin3.MouseState.HOVER;
+      btnAbrirPastaCustom.Name = "btnAbrirPastaCustom";
+      btnAbrirPastaCustom.NoAccentTextColor = Color.Empty;
+      btnAbrirPastaCustom.Size = new Size(233, 36);
+      btnAbrirPastaCustom.TabIndex = 8;
+      btnAbrirPastaCustom.Text = "Abrir Pasta Custom";
+      btnAbrirPastaCustom.Type = MaterialSkin3.Controls.MaterialButton.MaterialButtonType.Contained;
+      btnAbrirPastaCustom.UseAccentColor = false;
+      btnAbrirPastaCustom.UseVisualStyleBackColor = true;
+      btnAbrirPastaCustom.Click += btnCustom_Click;
       // 
       // btnLimparDllCustom
       // 
@@ -333,10 +333,10 @@
       materialCard2.Depth = 0;
       materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard2.Location = new Point(264, 113);
-      materialCard2.Margin = new Padding(14, 14, 14, 14);
+      materialCard2.Margin = new Padding(14);
       materialCard2.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard2.Name = "materialCard2";
-      materialCard2.Padding = new Padding(14, 14, 14, 14);
+      materialCard2.Padding = new Padding(14);
       materialCard2.Size = new Size(338, 288);
       materialCard2.TabIndex = 6;
       // 
@@ -389,10 +389,10 @@
       materialCard3.Depth = 0;
       materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard3.Location = new Point(13, 99);
-      materialCard3.Margin = new Padding(14, 14, 14, 14);
+      materialCard3.Margin = new Padding(14);
       materialCard3.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard3.Name = "materialCard3";
-      materialCard3.Padding = new Padding(14, 14, 14, 14);
+      materialCard3.Padding = new Padding(14);
       materialCard3.Size = new Size(314, 80);
       materialCard3.TabIndex = 0;
       // 
@@ -521,10 +521,10 @@
       materialCard4.Depth = 0;
       materialCard4.ForeColor = Color.FromArgb(222, 0, 0, 0);
       materialCard4.Location = new Point(612, 113);
-      materialCard4.Margin = new Padding(14, 14, 14, 14);
+      materialCard4.Margin = new Padding(14);
       materialCard4.MouseState = MaterialSkin3.MouseState.HOVER;
       materialCard4.Name = "materialCard4";
-      materialCard4.Padding = new Padding(14, 14, 14, 14);
+      materialCard4.Padding = new Padding(14);
       materialCard4.Size = new Size(325, 288);
       materialCard4.TabIndex = 5;
       // 
@@ -715,7 +715,7 @@
       // 
       AutoScaleMode = AutoScaleMode.None;
       BackColor = Color.FromArgb(64, 64, 64);
-      ClientSize = new Size(946, 452);
+      ClientSize = new Size(943, 449);
       Controls.Add(chkOnTray);
       Controls.Add(lblLog);
       Controls.Add(chkFavorito);
@@ -728,12 +728,10 @@
       Controls.Add(materialLabel1);
       Controls.Add(cmbAmbiente);
       Controls.Add(materialCard1);
-      FormBorderStyle = FormBorderStyle.FixedSingle;
+      FormBorderStyle = FormBorderStyle.Sizable;
       FormStyle = FormStyles.ActionBar_None;
-      MaximizeBox = false;
       Name = "AtalhosMainForm";
       Padding = new Padding(3, 24, 3, 3);
-      Sizable = false;
       Deactivate += AtalhosMainForm_Deactivate;
       FormClosing += AtalhosMainForm_FormClosing;
       Load += AtalhosMainForm_Load;
@@ -759,10 +757,10 @@
     private MaterialSkin3.Controls.MaterialFloatingActionButton materialFloatingActionButton2;
     private MaterialSkin3.Controls.MaterialLabel materialLabel2;
     private MaterialSkin3.Controls.MaterialComboBox cmbAlias;
-    private MaterialSkin3.Controls.MaterialButton materialButton3;
+    private MaterialSkin3.Controls.MaterialButton btnAbrirPastaCustom;
     private MaterialSkin3.Controls.MaterialButton btnAtualizador;
     private MaterialSkin3.Controls.MaterialButton btnLimparDllCustom;
-    private MaterialSkin3.Controls.MaterialButton materialButton4;
+    private MaterialSkin3.Controls.MaterialButton btnAbrirPastaBin;
     private MaterialSkin3.Controls.MaterialCard materialCard2;
     private MaterialSkin3.Controls.MaterialCheckbox chkAutoLogin;
     private MaterialSkin3.Controls.MaterialLabel materialLabel4;

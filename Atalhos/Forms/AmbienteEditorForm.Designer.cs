@@ -356,12 +356,10 @@
       // 
       // AmbienteEditorForm
       // 
-      AutoScaleDimensions = new SizeF(96F, 96F);
-      AutoScaleMode = AutoScaleMode.Dpi;
+      AutoScaleMode = AutoScaleMode.None;
       BackColor = SystemColors.Desktop;
       ClientSize = new Size(642, 327);
       Controls.Add(materialCard1);
-      MaximizeBox = false;
       Name = "AmbienteEditorForm";
       Sizable = false;
       StartPosition = FormStartPosition.CenterScreen;

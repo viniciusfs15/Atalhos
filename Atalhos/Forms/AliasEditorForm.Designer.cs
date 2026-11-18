@@ -706,15 +706,13 @@
       // 
       // AliasEditorForm
       // 
-      AutoScaleDimensions = new SizeF(96F, 96F);
-      AutoScaleMode = AutoScaleMode.Dpi;
+      AutoScaleMode = AutoScaleMode.None;
       BackColor = Color.FromArgb(64, 64, 64);
-      ClientSize = new Size(815, 603);
+      ClientSize = new Size(819, 602);
       Controls.Add(materialCard2);
       Controls.Add(materialCard1);
-      FormBorderStyle = FormBorderStyle.FixedSingle;
+      FormBorderStyle = FormBorderStyle.Sizable;
       Icon = (Icon)resources.GetObject("$this.Icon");
-      MaximizeBox = false;
       Name = "AliasEditorForm";
       StartPosition = FormStartPosition.CenterScreen;
       Text = "Editor de Alias";
