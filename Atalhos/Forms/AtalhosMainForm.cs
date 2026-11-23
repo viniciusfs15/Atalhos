@@ -684,7 +684,7 @@ namespace Atalhos
         itemAlias.Click += (s, e) => ExecTrayButon(s, e, ambiente, alias.NomeAlias, () => btnAddAlias_Click(s, e));
       }
 
-      itemAlias.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaErroIniciarAmbiente, Properties.Resources.Host, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbienteAliasEspecifico(s, e, alias))));
+      itemAlias.DropDown.Items.Add(CriarMenuItem(Properties.Resources.SAtaIniciar, Properties.Resources.Host, (s, e) => ExecTrayButon(s, e, ambiente, () => IniciarAmbienteAliasEspecifico(s, e, alias))));
       if (!ehSmartClient)
       {
         itemAlias.DropDown.Items.Add(new ToolStripSeparator());
